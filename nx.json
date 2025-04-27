@@ -37,7 +37,7 @@
       "options": {
         "targetName": "test"
       },
-      "exclude": ["apps/sephrmicroservice_monorepo-e2e/**/*"]
+      "exclude": ["apps/http-api-gateway-e2e/**/*", "apps/admin-e2e/**/*"]
     }
   ]
 }
