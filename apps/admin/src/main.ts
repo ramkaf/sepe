@@ -5,11 +5,11 @@
 
 import { Logger } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
-import { AppModule } from './app/app.module';
 import { MicroserviceOptions, Transport } from '@nestjs/microservices';
+import { AdminModule } from './app/admin.module';
 
 async function bootstrap() {
-  const app = await NestFactory.createMicroservice<MicroserviceOptions>(AppModule,
+  const app = await NestFactory.createMicroservice<MicroserviceOptions>(AdminModule,
     {
       transport : Transport.KAFKA ,
       options : {

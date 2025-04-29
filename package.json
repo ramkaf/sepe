@@ -2,17 +2,32 @@
   "name": "@sephrmicroservice-monorepo/source",
   "version": "0.0.0",
   "license": "MIT",
-  "scripts": {},
+  "scripts": {
+      "start" : "nx run-many --target=serve --all",
+   "start:ms": "node start-ms.js",
+      "gen:resource": "nx g @nestjs/schematics:resource --project=$npm_config_ms --source-root=apps/$npm_config_ms/src --transport=rest --crud --name=$npm_config_module"
+  },
   "private": true,
   "dependencies": {
+    "@elastic/elasticsearch": "^9.0.1",
     "@nestjs/common": "^10.0.2",
+    "@nestjs/config": "^4.0.2",
     "@nestjs/core": "^10.0.2",
+    "@nestjs/mapped-types": "*",
     "@nestjs/microservices": "^10.4.17",
     "@nestjs/platform-express": "^10.0.2",
+    "@nestjs/typeorm": "^11.0.0",
+    "@types/redis": "^4.0.10",
     "axios": "^1.6.0",
+    "class-transformer": "^0.5.1",
+    "class-validator": "^0.14.1",
     "kafkajs": "^2.2.4",
+    "pg": "^8.15.6",
+    "pg-promise": "^11.13.0",
+    "redis": "^4.7.0",
     "reflect-metadata": "^0.1.13",
-    "rxjs": "^7.8.0"
+    "rxjs": "^7.8.0",
+    "typeorm": "^0.3.22"
   },
   "devDependencies": {
     "@eslint/js": "^9.8.0",
