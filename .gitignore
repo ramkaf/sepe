@@ -5,6 +5,9 @@ dist
 tmp
 out-tsc
 
+.env.development
+.env.production
+.env.staging
 # dependencies
 node_modules
 
@@ -40,7 +43,3 @@ Thumbs.db
 
 .nx/cache
 .nx/workspace-data
-
-.env.development
-.env.production
-.env.staging
