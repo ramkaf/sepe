@@ -1,7 +1,8 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { ClientsModule, Transport } from '@nestjs/microservices';
+import { EntityController } from './controllers/admin/entity.controller';
+import { EntityFieldController } from './controllers/admin/entity-field.controller';
+import { EntityTypeController } from './controllers/admin/entity-type.controller';
 @Module({
   imports: [ClientsModule.register([
     {
@@ -14,7 +15,7 @@ import { ClientsModule, Transport } from '@nestjs/microservices';
       }
     }
   ])],
-  controllers: [],
+  controllers: [EntityFieldController , EntityTypeController , EntityController],
   providers: [],
 })
 export class AppModule {}

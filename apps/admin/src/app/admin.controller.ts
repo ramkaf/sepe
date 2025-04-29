@@ -10,6 +10,5 @@ export class AdminMicroserviceController {
   @MessagePattern('order-created')
   handleOrderCreated(@Payload() order:any){
     console.log(`order service recieved new message` , order);
-    
   }
 }
