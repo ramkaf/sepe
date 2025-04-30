@@ -7,25 +7,22 @@ import { Logger } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { MicroserviceOptions, Transport } from '@nestjs/microservices';
 import { AdminModule } from './app/admin.module';
+import { QUEUE_NAME, RABBITMQ_URL } from '@sephrmicroservice-monorepo/common';
 
 async function bootstrap() {
-  const app = await NestFactory.createMicroservice<MicroserviceOptions>(AdminModule,
-    {
-      transport : Transport.KAFKA ,
-      options : {
-        client : {
-          brokers : ['localhost:9092']
-        },
-        consumer : {
-          groupId : 'order-consumer-group'
-        }
-      }
+  const logger = new Logger('Main');
+  const app = await NestFactory.createMicroservice<MicroserviceOptions>(AdminModule,  {
+    transport: Transport.RMQ,
+    options: {
+      urls: [RABBITMQ_URL],
+      queue: QUEUE_NAME,
+      queueOptions: { durable: false }
     }
-  );
-  await app.listen();
-  Logger.log(
-    `Admin Application is listening to kafka ...`
-  );
+  }
+);
+  
+  app.listen().then(() => {
+    logger.log('Microservice is listening');
+  });
 }
-
 bootstrap();
