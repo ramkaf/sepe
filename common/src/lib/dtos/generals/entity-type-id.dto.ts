@@ -1,7 +1,8 @@
+
 import { IsInt, IsPositive } from 'class-validator';
 
-export class PlantIdDto {
+export class EntityTypeIdDto {
   @IsInt()
   @IsPositive()
-  plantId: number;
+  etId: number;
 }

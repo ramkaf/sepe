@@ -1,6 +1,5 @@
-import { Body, Controller, Get, Inject, Post } from '@nestjs/common';
-import { AppService } from './app.service';
-import { ClientKafka, ClientProxy } from '@nestjs/microservices';
+import { Controller, Get, Inject } from '@nestjs/common';
+import { ClientProxy } from '@nestjs/microservices';
 import { RABBITMQ_SERVICE } from '@sephrmicroservice-monorepo/common';
 
 @Controller()

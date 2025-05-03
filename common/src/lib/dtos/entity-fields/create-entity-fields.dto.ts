@@ -1,64 +1,42 @@
-import { IsBoolean, IsInt, IsNotEmpty, IsOptional, IsString, MaxLength } from 'class-validator';
-import { Type } from 'class-transformer';
+import { IsBoolean, IsInt, IsNotEmpty, IsNumber, IsOptional, IsString, Matches, MaxLength } from 'class-validator';
 
-export class EntityFieldCreateDto {
-  @IsOptional()
-  @IsString()
-  @MaxLength(255)
-  field_title: string;
+
+export class CreateEntityFieldDto {
+  @IsString() 
+  field_title: any;
 
   @IsString()
-  @IsNotEmpty()
-  @MaxLength(255)
+  @Matches(/^\S*$/, { message: 'field_tag must not contain spaces' })
   field_tag: string;
 
+  @IsNumber()
+  entity_type_id: number;
+
   @IsOptional()
   @IsString()
-  @MaxLength(50)
-  unit?: string | null;
+  unit: string;
 
   @IsBoolean()
   is_computational: boolean;
 
   @IsOptional()
-  @IsString()
-  @MaxLength(255)
-  last_value_function_name?: string | null;
+  last_value_function_name: string;
 
   @IsOptional()
-  @IsString()
-  @MaxLength(255)
-  all_values_function_name?: string | null;
+  all_values_function_name: string;
 
-  @IsOptional()
   @IsString()
-  @MaxLength(255)
-  browser_group?: string | null;
+  browser_group: string;
 
   @IsBoolean()
   is_static: boolean;
 
   @IsOptional()
-  @IsString()
-  @MaxLength(255)
-  static_value?: string;
+  static_value: string;
 
   @IsOptional()
-  @IsString()
-  @MaxLength(255)
-  mask_function?: string | null;
+  mask_function: string;
 
   @IsOptional()
-  @IsString()
-  @MaxLength(255)
-  field_type?: string = 'value'; // default to 'value'
-
-  @IsOptional()
-  @IsString()
-  @MaxLength(255)
-  default_cache_value?: string | null;
-
-  @Type(() => Number)
-  @IsInt()
-  entity_type_id: number;
+  field_type: string;
 }
