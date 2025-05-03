@@ -1,6 +1,6 @@
 import { Controller } from '@nestjs/common';
 
-@Controller('entity-type')
+@Controller('/admin/entity-type')
 export class EntityTypeController {
-
+    
 }

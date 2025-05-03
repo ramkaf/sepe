@@ -1,44 +1,28 @@
 import { Module } from '@nestjs/common';
 import { ClientsModule, Transport } from '@nestjs/microservices';
-import { ConfigModule } from '@nestjs/config';
-import {AlarmCondition, PostgresModule} from './../../../../common/src/lib/database/postgresql'
-import {ElasticModuleVersion2} from './../../../../common/src/lib/database/elastic/elastic2.module'
-import { TypeOrmModule } from '@nestjs/typeorm';
+import { ConfigModule, ConfigService } from '@nestjs/config';
+import { EntityController } from './entity/entity.controller';
+import { EntityService } from './entity/entity.service';
 import { AdminMicroserviceController } from './admin.controller';
-import { AdminService } from './admin.service';
-import { EntityFieldModule } from './entity-fields/entity-field.module';
-import { EntityTypeModule } from './entity-type/entity-type.module';
-import { EntityModule } from './entity/entity.module';
-import { ChartDetailModule } from './chart-detail/chart-detail.module';
-import { ChartModule } from './chart/chart.module';
-import { ChartEntityModule } from './chart-entity/chart-entity.module';
-import { DetailFieldModule } from './detail-field/detail-field.module';
+import { EntityFieldController } from './entity-fields/entity-field.controller';
+import { EntityTypeController } from './entity-type/entity-type.controller';
+
 
 @Module({
   imports: [
-    ConfigModule.forRoot({
-      envFilePath: `.env.${process.env.NODE_ENV || 'development'}`,
-      isGlobal: true,
-    }),
-    PostgresModule,
-    ClientsModule.register([{
-    name : 'KAFKA_SERVICE',
-    transport : Transport.KAFKA,
-    options : {
-      client : {
-        brokers : ['localhost:9092']
+    ConfigModule.forRoot(),
+    ClientsModule.register([
+      {
+        name : 'ADMIN_SERVICE',
+        transport : Transport.RMQ,
+        options : {
+          urls : ['amqp://localhost:5672'],
+          queue : 'admin-queue'
+        }
       }
-    }
-  }]),
-  EntityFieldModule,
-  EntityTypeModule,
-  EntityModule,
-  ChartDetailModule,
-  ChartModule,
-  ChartEntityModule,
-  DetailFieldModule
-],
+    ]),
+  ],
   controllers: [AdminMicroserviceController],
-  providers: [AdminService],
+  providers: [AdminMicroserviceController],
 })
 export class AdminModule {}

@@ -8,7 +8,7 @@ import { ChartDetail } from './chart-detail.entity';
 @SchemaEntity('main', 'entity_types')
 export class EntityType {
   @PrimaryGeneratedColumn({ name: 'et_id' })
-  id: number;
+  etId: number;
 
   @Column()
   name: string;
