@@ -21,7 +21,7 @@ import { AlarmConfigEntity } from './alarm-config.entity';
 import { CollectionEntity } from './collection.entity';
 import { DocumentEntity } from './document.entity';
 
-@SchemaEntity('main', 'entity')
+@SchemaEntity('main' , 'entity')
 export class EntityModel {
   @PrimaryGeneratedColumn({ name: 'e_id' })
   @Index({ unique: true })
@@ -40,7 +40,7 @@ export class EntityModel {
   @Column({ name: 'entity_type_id', type: 'int', nullable: true })
   entityTypeId: number | null;
 
-  @ManyToOne(() => EntityType, (entityType) => entityType.id, {
+  @ManyToOne(() => EntityType, (entityType) => entityType.etId, {
     nullable: true,
   })
   @JoinColumn({ name: 'entity_type_id' })
