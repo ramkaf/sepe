@@ -1,7 +1,7 @@
-import { Type } from "class-transformer";
-import { EntityTypeIdDto } from "../generals/entity-type-id.dto";
+import { Type } from 'class-transformer';
+import { EntityTypeIdDto } from '../generals/entity-type-id.dto';
 
 export class GetEntityTypeByIdArrayDto {
-    @Type(() => EntityTypeIdDto)
-    data: EntityTypeIdDto[];
-  }
+  @Type(() => EntityTypeIdDto)
+  data: EntityTypeIdDto[];
+}

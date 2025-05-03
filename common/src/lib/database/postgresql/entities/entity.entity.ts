@@ -21,7 +21,7 @@ import { AlarmConfigEntity } from './alarm-config.entity';
 import { CollectionEntity } from './collection.entity';
 import { DocumentEntity } from './document.entity';
 
-@SchemaEntity('main' , 'entity')
+@SchemaEntity('main', 'entity')
 export class EntityModel {
   @PrimaryGeneratedColumn({ name: 'e_id' })
   @Index({ unique: true })
@@ -60,7 +60,7 @@ export class EntityModel {
 
   @ManyToMany(() => Soiling, (soiling) => soiling.entities)
   @JoinTable({
-    name: 'soiling_entities', 
+    name: 'soiling_entities',
     joinColumn: {
       name: 'entity_id',
       referencedColumnName: 'eId',
@@ -71,7 +71,7 @@ export class EntityModel {
     },
   })
   soilings: Soiling[];
-  
+
   @OneToMany(() => ChartEntity, (chartEntity) => chartEntity.entity)
   chartEntities: ChartEntity[];
 

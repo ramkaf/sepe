@@ -34,7 +34,7 @@ export class EntityField {
   @Column({ name: 'unit', type: 'varchar', nullable: true })
   unit: string | null;
 
-  @Column({ name: 'is_computational', type: 'boolean' , default : false })
+  @Column({ name: 'is_computational', type: 'boolean', default: false })
   is_computational: boolean;
 
   @Column({ name: 'last_value_function_name', type: 'varchar', nullable: true })
@@ -65,9 +65,8 @@ export class EntityField {
 
   @Column({ name: 'default_cache_value', type: 'varchar', nullable: true })
   default_cache_value: string | null;
-  
 
-  @Column({ name: 'entity_type_id', type: 'int' }) 
+  @Column({ name: 'entity_type_id', type: 'int' })
   entity_type_id: number | null;
 
   @ManyToOne(() => EntityType)
@@ -88,7 +87,7 @@ export class EntityField {
 
   @OneToOne(
     () => EntityFieldsPeriod,
-    (fieldsPeriod) => fieldsPeriod.entityField,
+    (fieldsPeriod) => fieldsPeriod.entityField
   )
   fieldsPeriod: EntityFieldsPeriod;
 

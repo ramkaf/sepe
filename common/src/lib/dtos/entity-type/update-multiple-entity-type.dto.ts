@@ -1,7 +1,7 @@
-import { Type } from "class-transformer";
-import { UpdateEntityTypeDto } from "./update-entity-type.dto";
+import { Type } from 'class-transformer';
+import { UpdateEntityTypeDto } from './update-entity-type.dto';
 
 export class UpdateMultipleEntityTypeDto {
-    @Type(() => UpdateEntityTypeDto)
-    data: UpdateEntityTypeDto[];
-  }
+  @Type(() => UpdateEntityTypeDto)
+  data: UpdateEntityTypeDto[];
+}

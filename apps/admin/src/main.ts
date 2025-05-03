@@ -11,16 +11,18 @@ import { QUEUE_NAME, RABBITMQ_URL } from '@sephrmicroservice-monorepo/common';
 
 async function bootstrap() {
   const logger = new Logger('Main');
-  const app = await NestFactory.createMicroservice<MicroserviceOptions>(AdminModule,  {
-    transport: Transport.RMQ,
-    options: {
-      urls: [RABBITMQ_URL],
-      queue: QUEUE_NAME,
-      queueOptions: { durable: false }
+  const app = await NestFactory.createMicroservice<MicroserviceOptions>(
+    AdminModule,
+    {
+      transport: Transport.RMQ,
+      options: {
+        urls: [RABBITMQ_URL],
+        queue: QUEUE_NAME,
+        queueOptions: { durable: false },
+      },
     }
-  }
-);
-  
+  );
+
   app.listen().then(() => {
     logger.log('Microservice is listening');
   });

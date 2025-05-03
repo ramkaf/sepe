@@ -1,4 +1,11 @@
-import { Module, DynamicModule, Provider, Global, OnModuleInit, Logger } from '@nestjs/common';
+import {
+  Module,
+  DynamicModule,
+  Provider,
+  Global,
+  OnModuleInit,
+  Logger,
+} from '@nestjs/common';
 import { ElasticService } from './elastic.service';
 import { ELASTIC_CLIENT } from './elastic.constants';
 import { ElasticModuleOptions } from './elastic.interfaces';

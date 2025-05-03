@@ -5,7 +5,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { EntityModel } from '@sephrmicroservice-monorepo/common';
 
 @Module({
-  imports : [],
+  imports: [],
   controllers: [EntityController],
   providers: [EntityService],
 })

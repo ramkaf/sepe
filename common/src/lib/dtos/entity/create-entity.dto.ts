@@ -1,9 +1,5 @@
-import {
-    IsString,
-    IsNumber,
-    IsInt,
-  } from 'class-validator';
-  
+import { IsString, IsNumber, IsInt } from 'class-validator';
+
 export class CreateEntityDto {
   @IsString()
   entity_name: string;

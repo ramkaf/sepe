@@ -5,7 +5,9 @@ const moduleName = process.argv[3];
 
 if (!msName || !moduleName) {
   console.error('Please provide both microservice name and module name');
-  console.error('Usage: npm run gen:resource <microservice-name> <module-name>');
+  console.error(
+    'Usage: npm run gen:resource <microservice-name> <module-name>'
+  );
   process.exit(1);
 }
 

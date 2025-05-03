@@ -12,7 +12,6 @@ import { EntityType } from './entity-types.entity';
 import { DetailsField } from './detail-field.entity';
 import { ChartEntity } from './chart-entity.entity';
 
-
 @SchemaEntity('main', 'chart_details')
 export class ChartDetail {
   @PrimaryGeneratedColumn({ name: 'detail_id' })
@@ -33,11 +32,15 @@ export class ChartDetail {
   @Column({ name: 'entity_type_id', type: 'int', nullable: true })
   entityTypeId: number | null;
 
-  @ManyToOne(() => Chart, (chart) => chart.chartDetails, { onDelete: 'CASCADE' })
+  @ManyToOne(() => Chart, (chart) => chart.chartDetails, {
+    onDelete: 'CASCADE',
+  })
   @JoinColumn({ name: 'chart_id' })
   chart: Chart;
 
-  @ManyToOne(() => EntityType, (entityType) => entityType.chartDetails, { nullable: true })
+  @ManyToOne(() => EntityType, (entityType) => entityType.chartDetails, {
+    nullable: true,
+  })
   @JoinColumn({ name: 'entity_type_id' })
   entityType: EntityType | null;
 
@@ -45,5 +48,5 @@ export class ChartDetail {
   detailsFields: DetailsField[];
 
   @OneToMany(() => ChartEntity, (chartEntity) => chartEntity.chartDetail)
-chartEntities: ChartEntity[];
+  chartEntities: ChartEntity[];
 }

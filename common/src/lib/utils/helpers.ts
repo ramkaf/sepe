@@ -5,8 +5,8 @@ export const readFileContents = async (filePath: string): Promise<string> => {
     const data = await fs.readFile(filePath, 'utf-8');
     console.log('File contents:', data);
     return data;
-     } catch (error) {
-      const e = error as Error;
+  } catch (error) {
+    const e = error as Error;
     console.error('Error reading file:', error);
     throw error;
   }
