@@ -37,5 +37,5 @@ export class EntityType {
   soilings: Soiling[];
 
   @OneToMany(() => ChartDetail, (chartDetail) => chartDetail.entityType)
-chartDetails: ChartDetail[]
-} 
+  chartDetails: ChartDetail[];
+}

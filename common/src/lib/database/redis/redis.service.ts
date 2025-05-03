@@ -25,7 +25,7 @@ export class RedisService implements OnModuleInit, OnModuleDestroy {
     });
 
     this.client.on('error', (err) =>
-      this.logger.error('Redis Client Error', err),
+      this.logger.error('Redis Client Error', err)
     );
   }
 
@@ -33,13 +33,15 @@ export class RedisService implements OnModuleInit, OnModuleDestroy {
     try {
       await this.connect();
       this.logger.log(
-        `✅ Redis client connected successfully to ${this.configService.get('REDIS_HOST')}:${this.configService.get('REDIS_PORT')}`,
+        `✅ Redis client connected successfully to ${this.configService.get(
+          'REDIS_HOST'
+        )}:${this.configService.get('REDIS_PORT')}`
       );
-       } catch (error) {
+    } catch (error) {
       const e = error as Error;
       this.logger.error(
         `❌ Failed to connect to Redis: ${e.message}`,
-        error.stack,
+        error.stack
       );
     }
   }
@@ -68,7 +70,7 @@ export class RedisService implements OnModuleInit, OnModuleDestroy {
   async get(key: string): Promise<string | null> {
     try {
       return await this.client.get(key);
-       } catch (error) {
+    } catch (error) {
       const e = error as Error;
       this.logger.error(`Error getting key ${key}: ${e.message}`);
       throw error;
@@ -78,14 +80,14 @@ export class RedisService implements OnModuleInit, OnModuleDestroy {
   async set(
     key: string,
     value: string,
-    ttlSeconds?: number,
+    ttlSeconds?: number
   ): Promise<string | null> {
     try {
       if (ttlSeconds) {
         return await this.client.set(key, value, { EX: ttlSeconds });
       }
       return await this.client.set(key, value);
-       } catch (error) {
+    } catch (error) {
       const e = error as Error;
       this.logger.error(`Error setting key ${key}: ${e.message}`);
       throw error;
@@ -95,7 +97,7 @@ export class RedisService implements OnModuleInit, OnModuleDestroy {
   async del(key: string): Promise<number> {
     try {
       return await this.client.del(key);
-       } catch (error) {
+    } catch (error) {
       const e = error as Error;
       this.logger.error(`Error deleting key ${key}: ${e.message}`);
       throw error;
@@ -105,11 +107,9 @@ export class RedisService implements OnModuleInit, OnModuleDestroy {
   async exists(key: string): Promise<number> {
     try {
       return await this.client.exists(key);
-       } catch (error) {
+    } catch (error) {
       const e = error as Error;
-      this.logger.error(
-        `Error checking if key ${key} exists: ${e.message}`,
-      );
+      this.logger.error(`Error checking if key ${key} exists: ${e.message}`);
       throw error;
     }
   }
@@ -118,11 +118,9 @@ export class RedisService implements OnModuleInit, OnModuleDestroy {
   async pushToStack(stackName: string, ...values: string[]): Promise<number> {
     try {
       return await this.client.lPush(stackName, values);
-       } catch (error) {
+    } catch (error) {
       const e = error as Error;
-      this.logger.error(
-        `Error pushing to stack ${stackName}: ${e.message}`,
-      );
+      this.logger.error(`Error pushing to stack ${stackName}: ${e.message}`);
       throw error;
     }
   }
@@ -130,11 +128,9 @@ export class RedisService implements OnModuleInit, OnModuleDestroy {
   async popFromStack(stackName: string): Promise<string | null> {
     try {
       return await this.client.lPop(stackName);
-       } catch (error) {
+    } catch (error) {
       const e = error as Error;
-      this.logger.error(
-        `Error popping from stack ${stackName}: ${e.message}`,
-      );
+      this.logger.error(`Error popping from stack ${stackName}: ${e.message}`);
       throw error;
     }
   }
@@ -142,10 +138,10 @@ export class RedisService implements OnModuleInit, OnModuleDestroy {
   async getStackLength(stackName: string): Promise<number> {
     try {
       return await this.client.lLen(stackName);
-       } catch (error) {
+    } catch (error) {
       const e = error as Error;
       this.logger.error(
-        `Error getting stack length ${stackName}: ${e.message}`,
+        `Error getting stack length ${stackName}: ${e.message}`
       );
       throw error;
     }
@@ -154,14 +150,14 @@ export class RedisService implements OnModuleInit, OnModuleDestroy {
   async getStackElements(
     stackName: string,
     start = 0,
-    end = -1,
+    end = -1
   ): Promise<string[]> {
     try {
       return await this.client.lRange(stackName, start, end);
-       } catch (error) {
+    } catch (error) {
       const e = error as Error;
       this.logger.error(
-        `Error getting stack elements ${stackName}: ${e.message}`,
+        `Error getting stack elements ${stackName}: ${e.message}`
       );
       throw error;
     }
@@ -171,11 +167,9 @@ export class RedisService implements OnModuleInit, OnModuleDestroy {
   async enqueue(queueName: string, ...values: string[]): Promise<number> {
     try {
       return await this.client.rPush(queueName, values);
-       } catch (error) {
+    } catch (error) {
       const e = error as Error;
-      this.logger.error(
-        `Error enqueueing to queue ${queueName}: ${e.message}`,
-      );
+      this.logger.error(`Error enqueueing to queue ${queueName}: ${e.message}`);
       throw error;
     }
   }
@@ -183,10 +177,10 @@ export class RedisService implements OnModuleInit, OnModuleDestroy {
   async dequeue(queueName: string): Promise<string | null> {
     try {
       return await this.client.lPop(queueName);
-       } catch (error) {
+    } catch (error) {
       const e = error as Error;
       this.logger.error(
-        `Error dequeueing from queue ${queueName}: ${e.message}`,
+        `Error dequeueing from queue ${queueName}: ${e.message}`
       );
       throw error;
     }
@@ -195,10 +189,10 @@ export class RedisService implements OnModuleInit, OnModuleDestroy {
   async getQueueLength(queueName: string): Promise<number> {
     try {
       return await this.client.lLen(queueName);
-       } catch (error) {
+    } catch (error) {
       const e = error as Error;
       this.logger.error(
-        `Error getting queue length ${queueName}: ${e.message}`,
+        `Error getting queue length ${queueName}: ${e.message}`
       );
       throw error;
     }

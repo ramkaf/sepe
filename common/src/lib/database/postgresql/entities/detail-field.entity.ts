@@ -32,7 +32,9 @@ export class DetailsField {
   @Column({ name: 'chart_type', type: 'varchar', nullable: true })
   chartType: string | null;
 
-  @ManyToOne(() => ChartDetail, (chartDetail) => chartDetail.detailsFields, { onDelete: 'CASCADE' })
+  @ManyToOne(() => ChartDetail, (chartDetail) => chartDetail.detailsFields, {
+    onDelete: 'CASCADE',
+  })
   @JoinColumn({ name: 'detail_id' })
   chartDetail: ChartDetail;
 

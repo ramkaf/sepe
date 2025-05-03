@@ -3,7 +3,7 @@ import { Entity, EntityOptions } from 'typeorm';
 export function SchemaEntity(
   schema: string,
   name: string,
-  options?: Omit<EntityOptions, 'name'>,
+  options?: Omit<EntityOptions, 'name'>
 ) {
   return Entity({
     name,

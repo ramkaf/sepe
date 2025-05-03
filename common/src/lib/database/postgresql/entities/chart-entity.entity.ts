@@ -23,7 +23,9 @@ export class ChartEntity {
   @Column({ name: 'chart_entity_title', type: 'varchar', nullable: true })
   chartEntityTitle: string | null;
 
-  @ManyToOne(() => ChartDetail, (chartDetail) => chartDetail.chartEntities, { onDelete: 'CASCADE' })
+  @ManyToOne(() => ChartDetail, (chartDetail) => chartDetail.chartEntities, {
+    onDelete: 'CASCADE',
+  })
   @JoinColumn({ name: 'detail_id' })
   chartDetail: ChartDetail;
 

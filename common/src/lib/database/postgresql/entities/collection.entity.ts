@@ -1,10 +1,18 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, ManyToMany, JoinTable } from 'typeorm';
-import { EntityModel } from './entity.entity'; 
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  ManyToOne,
+  JoinColumn,
+  ManyToMany,
+  JoinTable,
+} from 'typeorm';
+import { EntityModel } from './entity.entity';
 import { User } from './user.entity';
 import { SchemaEntity } from '../decorators/schema-entity.decorator';
 import { EntityField } from './entity-field.entity';
 
-@SchemaEntity('main' , 'collections')
+@SchemaEntity('main', 'collections')
 export class CollectionEntity {
   @PrimaryGeneratedColumn({ name: 'c_id' })
   id: number;

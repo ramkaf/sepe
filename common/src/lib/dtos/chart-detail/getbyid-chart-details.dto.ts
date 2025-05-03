@@ -1,6 +1,6 @@
-import { IsNumber } from "class-validator";
+import { IsNumber } from 'class-validator';
 
 export class GetByIdChartDetailsDto {
-    @IsNumber()
-    detail_id: number;
-  }
+  @IsNumber()
+  detail_id: number;
+}

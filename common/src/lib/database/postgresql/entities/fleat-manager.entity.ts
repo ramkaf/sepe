@@ -8,7 +8,7 @@ import {
 import { EntityModel } from './entity.entity';
 import { SchemaEntity } from '../decorators/schema-entity.decorator';
 
-@SchemaEntity('main' , 'fleet_manager')
+@SchemaEntity('main', 'fleet_manager')
 export class FleetManager {
   @PrimaryGeneratedColumn({ name: 'fm_id' })
   id: number;

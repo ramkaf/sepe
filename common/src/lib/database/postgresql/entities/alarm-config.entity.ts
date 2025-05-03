@@ -1,8 +1,14 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn } from 'typeorm';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  ManyToOne,
+  JoinColumn,
+} from 'typeorm';
 import { EntityModel } from './entity.entity';
 import { SchemaEntity } from '../decorators/schema-entity.decorator';
 
-@SchemaEntity('main' , 'alarm_config')
+@SchemaEntity('main', 'alarm_config')
 export class AlarmConfigEntity {
   @PrimaryGeneratedColumn({ name: 'ac_id' })
   id: number;

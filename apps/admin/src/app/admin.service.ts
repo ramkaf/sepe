@@ -7,7 +7,7 @@ import { Repository } from 'typeorm';
 export class AdminService {
   constructor(
     @InjectRepository(AlarmCondition)
-    private readonly alarmConditionRepository: Repository<AlarmCondition>,
+    private readonly alarmConditionRepository: Repository<AlarmCondition>
   ) {}
 
   async createAlarmCondition(): Promise<AlarmCondition> {

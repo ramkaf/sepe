@@ -6,23 +6,32 @@ import { EntityService } from './entity/entity.service';
 import { AdminMicroserviceController } from './admin.controller';
 import { EntityFieldController } from './entity-fields/entity-field.controller';
 import { EntityTypeController } from './entity-type/entity-type.controller';
-
+import { ChartController } from './chart/chart.controller';
+import { ChartDetailController } from './chart-detail/chart-detail.controller';
+import { DetailFieldController } from './detail-field/detail-field.controller';
 
 @Module({
   imports: [
     ConfigModule.forRoot(),
     ClientsModule.register([
       {
-        name : 'ADMIN_SERVICE',
-        transport : Transport.RMQ,
-        options : {
-          urls : ['amqp://localhost:5672'],
-          queue : 'admin-queue'
-        }
-      }
+        name: 'ADMIN_SERVICE',
+        transport: Transport.RMQ,
+        options: {
+          urls: ['amqp://localhost:5672'],
+          queue: 'admin-queue',
+        },
+      },
     ]),
   ],
-  controllers: [AdminMicroserviceController],
+  controllers: [
+    EntityTypeController,
+    EntityController,
+    EntityFieldController,
+    ChartController,
+    ChartDetailController,
+    DetailFieldController,
+  ],
   providers: [AdminMicroserviceController],
 })
 export class AdminModule {}

@@ -65,7 +65,7 @@ import { ApiLog } from './entities/log.entity';
           AlertConfigMessage,
           AlarmConfigEntity,
           CollectionEntity,
-          DocumentEntity
+          DocumentEntity,
         ],
         synchronize: configService.get<boolean>('POSTGRES_SYNCHRONIZE', false),
         logging: configService.get<boolean>('POSTGRES_LOGGING', true),
@@ -86,14 +86,14 @@ export class PostgresModule implements OnModuleInit {
     try {
       await queryRunner.connect();
       const result = await queryRunner.query(
-        "SELECT schema_name FROM information_schema.schemata WHERE schema_name NOT LIKE 'pg_%' AND schema_name != 'information_schema'",
+        "SELECT schema_name FROM information_schema.schemata WHERE schema_name NOT LIKE 'pg_%' AND schema_name != 'information_schema'"
       );
-      const existingSchemas = result.map((row:any) => row.schema_name);
+      const existingSchemas = result.map((row: any) => row.schema_name);
       for (const schema of this.requiredSchemas) {
         if (!existingSchemas.includes(schema))
           await queryRunner.query(`CREATE SCHEMA IF NOT EXISTS "${schema}"`);
       }
-       } catch (error) {
+    } catch (error) {
       const e = error as Error;
       console.error('Error ensuring schemas exist:', error);
       throw error;

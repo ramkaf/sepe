@@ -1,4 +1,10 @@
-import { Module, DynamicModule, Provider, Global, Logger } from '@nestjs/common';
+import {
+  Module,
+  DynamicModule,
+  Provider,
+  Global,
+  Logger,
+} from '@nestjs/common';
 import { ElasticService } from './elastic.service';
 import { ELASTIC_CLIENT } from './elastic.constants';
 import { Client, ClientOptions } from '@elastic/elasticsearch';
@@ -33,7 +39,6 @@ export interface ElasticModuleOptions {
 @Global()
 @Module({})
 export class ElasticModuleVersion2 {
-
   static register(options?: Partial<ElasticModuleOptions>): DynamicModule {
     const elasticProvider: Provider = {
       provide: ELASTIC_CLIENT,
@@ -43,27 +48,34 @@ export class ElasticModuleVersion2 {
         }
 
         const clientOptions: ClientOptions = {};
-        clientOptions.node = options?.config?.node || process.env['ELASTIC_NODE']!;
+        clientOptions.node =
+          options?.config?.node || process.env['ELASTIC_NODE']!;
         clientOptions.auth = {
-          username: options?.config?.auth?.username || process.env['ELASTIC_USERNAME']!,
-          password: options?.config?.auth?.password || process.env['ELASTIC_PASSWORD']!,
+          username:
+            options?.config?.auth?.username || process.env['ELASTIC_USERNAME']!,
+          password:
+            options?.config?.auth?.password || process.env['ELASTIC_PASSWORD']!,
         };
 
         // Configure TLS
-        const caPath = options?.config?.tls?.caPath || path.resolve(process.cwd(), 'ca.crt');
-        
+        const caPath =
+          options?.config?.tls?.caPath || path.resolve(process.cwd(), 'ca.crt');
+
         try {
           const ca = fs.readFileSync(caPath);
           clientOptions.tls = {
             ca,
-            rejectUnauthorized: options?.config?.tls?.rejectUnauthorized !== undefined 
-              ? options.config.tls.rejectUnauthorized 
-              : false,
+            rejectUnauthorized:
+              options?.config?.tls?.rejectUnauthorized !== undefined
+                ? options.config.tls.rejectUnauthorized
+                : false,
           };
         } catch (error) {
           const logger = new Logger('ElasticModule');
-          const e = error as Error
-          logger.error(`Failed to read CA certificate at ${caPath}: ${e.message}`);
+          const e = error as Error;
+          logger.error(
+            `Failed to read CA certificate at ${caPath}: ${e.message}`
+          );
           throw error;
         }
 

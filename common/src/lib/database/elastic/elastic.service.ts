@@ -14,7 +14,7 @@ export class ElasticService {
         ...query,
       });
       return response;
-       } catch (error) {
+    } catch (error) {
       const e = error as Error;
       throw new Error(`Elasticsearch search error: ${e.message}`);
     }
@@ -33,7 +33,7 @@ export class ElasticService {
       }
 
       return await this.elasticClient.index(params);
-       } catch (error) {
+    } catch (error) {
       const e = error as Error;
       throw new Error(`Elasticsearch index error: ${e.message}`);
     }
@@ -46,7 +46,7 @@ export class ElasticService {
         index,
         id,
       });
-       } catch (error) {
+    } catch (error) {
       const e = error as Error;
       throw new Error(`Elasticsearch delete error: ${e.message}`);
     }
@@ -57,7 +57,7 @@ export class ElasticService {
     try {
       const response = await this.elasticClient.indices.exists({ index });
       return response;
-       } catch (error) {
+    } catch (error) {
       const e = error as Error;
       throw new Error(`Elasticsearch index exists error: ${e.message}`);
     }
@@ -73,7 +73,7 @@ export class ElasticService {
       }
 
       return await this.elasticClient.indices.create(indexParams);
-       } catch (error) {
+    } catch (error) {
       const e = error as Error;
       throw new Error(`Elasticsearch create index error: ${e.message}`);
     }
@@ -83,7 +83,7 @@ export class ElasticService {
   async deleteIndex(index: string): Promise<any> {
     try {
       return await this.elasticClient.indices.delete({ index });
-       } catch (error) {
+    } catch (error) {
       const e = error as Error;
       throw new Error(`Elasticsearch delete index error: ${e.message}`);
     }
@@ -93,7 +93,7 @@ export class ElasticService {
   async bulk(operations: any[]): Promise<any> {
     try {
       return await this.elasticClient.bulk({ body: operations });
-       } catch (error) {
+    } catch (error) {
       const e = error as Error;
       throw new Error(`Elasticsearch bulk operation error: ${e.message}`);
     }
