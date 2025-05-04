@@ -1,9 +1,9 @@
 import { Module } from '@nestjs/common';
 import { DetailFieldService } from './detail-field.service';
-import { DetailFieldController } from './detail-field.controller';
+import { DetailFieldMicroserviceController } from './detail-field.controller';
 
 @Module({
-  controllers: [DetailFieldController],
+  controllers: [DetailFieldMicroserviceController],
   providers: [DetailFieldService],
 })
 export class DetailFieldModule {}
