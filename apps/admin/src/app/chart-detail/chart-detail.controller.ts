@@ -9,4 +9,4 @@ import {
 } from '@nestjs/common';
 
 @Controller('chart-detail')
-export class ChartDetailController {}
+export class ChartDetailMicroserviceController {}

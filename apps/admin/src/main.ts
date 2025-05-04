@@ -7,7 +7,7 @@ import { Logger } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { MicroserviceOptions, Transport } from '@nestjs/microservices';
 import { AdminModule } from './app/admin.module';
-import { QUEUE_NAME, RABBITMQ_URL } from '@sephrmicroservice-monorepo/common';
+import { ADMIN_RABBITMQ_QUEUE, RABBITMQ_URL } from '@sephrmicroservice-monorepo/common';
 
 async function bootstrap() {
   const logger = new Logger('Main');
@@ -17,14 +17,14 @@ async function bootstrap() {
       transport: Transport.RMQ,
       options: {
         urls: [RABBITMQ_URL],
-        queue: QUEUE_NAME,
+        queue: ADMIN_RABBITMQ_QUEUE,
         queueOptions: { durable: false },
       },
     }
   );
 
   app.listen().then(() => {
-    logger.log('Microservice is listening');
+    logger.log('admin Microservice is listening');
   });
 }
 bootstrap();

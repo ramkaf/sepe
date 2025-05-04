@@ -1,9 +1,9 @@
 import { Module } from '@nestjs/common';
 import { ChartDetailService } from './chart-detail.service';
-import { ChartDetailController } from './chart-detail.controller';
+import { ChartDetailMicroserviceController } from './chart-detail.controller';
 
 @Module({
-  controllers: [ChartDetailController],
+  controllers: [ChartDetailMicroserviceController],
   providers: [ChartDetailService],
 })
 export class ChartDetailModule {}

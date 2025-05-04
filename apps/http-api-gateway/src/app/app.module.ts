@@ -1,35 +1,22 @@
 import { Module } from '@nestjs/common';
 import { ClientsModule, Transport } from '@nestjs/microservices';
-import { EntityController } from './controllers/entities/entity.controller';
-import { EntityFieldController } from './controllers/entities/entity-field.controller';
-import { EntityTypeController } from './controllers/entities/entity-type.controller';
+import { EntityController } from './controllers/admin/entities/entity.controller';
+import { EntityFieldController } from './controllers/admin/entities/entity-field.controller';
+import { EntityTypeController } from './controllers/admin/entities/entity-type.controller';
 import {
-  QUEUE_NAME,
-  RABBITMQ_SERVICE,
-  RABBITMQ_URL,
+  ADMIN_RABBITMQ_QUEUE,
+  ADMIN_RABBITMQ_SERVICE,
+  RabbitMQModule,
 } from '@sephrmicroservice-monorepo/common';
-import { AppController } from './app.controller';
 
 @Module({
   imports: [
-    ClientsModule.register([
-      {
-        name: RABBITMQ_SERVICE,
-        transport: Transport.RMQ,
-        options: {
-          urls: [RABBITMQ_URL],
-          queue: QUEUE_NAME,
-          queueOptions: { durable: false },
-        },
-      },
-    ]),
+    RabbitMQModule.register([
+      {name : ADMIN_RABBITMQ_SERVICE , queue : ADMIN_RABBITMQ_QUEUE}
+    ])
   ],
   controllers: [
-    EntityFieldController,
-    EntityTypeController,
-    EntityController,
-    AppController,
-  ],
-  providers: [],
+    EntityTypeController
+  ]
 })
 export class AppModule {}

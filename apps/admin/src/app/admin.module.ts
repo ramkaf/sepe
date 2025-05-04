@@ -1,37 +1,33 @@
 import { Module } from '@nestjs/common';
-import { ClientsModule, Transport } from '@nestjs/microservices';
-import { ConfigModule, ConfigService } from '@nestjs/config';
-import { EntityController } from './entity/entity.controller';
-import { EntityService } from './entity/entity.service';
-import { AdminMicroserviceController } from './admin.controller';
-import { EntityFieldController } from './entity-fields/entity-field.controller';
-import { EntityTypeController } from './entity-type/entity-type.controller';
-import { ChartController } from './chart/chart.controller';
-import { ChartDetailController } from './chart-detail/chart-detail.controller';
-import { DetailFieldController } from './detail-field/detail-field.controller';
+import { ConfigModule } from '@nestjs/config';
+import { EntityTypeModule } from './entity-type/entity-type.module';
+import { EntityFieldModule } from './entity-fields/entity-field.module';
+import {
+  ADMIN_RABBITMQ_QUEUE,
+  ADMIN_RABBITMQ_SERVICE,
+  ChartDetail,
+  ChartEntity,
+  EntityModel,
+  PostgresModule,
+  RabbitMQModule,
+} from '@sephrmicroservice-monorepo/common';
+import { ChartModule } from './chart/chart.module';
+import { DetailFieldModule } from './detail-field/detail-field.module';
 
 @Module({
   imports: [
     ConfigModule.forRoot(),
-    ClientsModule.register([
-      {
-        name: 'ADMIN_SERVICE',
-        transport: Transport.RMQ,
-        options: {
-          urls: ['amqp://localhost:5672'],
-          queue: 'admin-queue',
-        },
-      },
+    RabbitMQModule.register([
+      { name: ADMIN_RABBITMQ_SERVICE, queue: ADMIN_RABBITMQ_QUEUE }
     ]),
+    EntityTypeModule,
+    PostgresModule
+    // EntityFieldModule,
+    // EntityModel,
+    // ChartModule,
+    // ChartDetail,
+    // DetailFieldModule,
   ],
-  controllers: [
-    EntityTypeController,
-    EntityController,
-    EntityFieldController,
-    ChartController,
-    ChartDetailController,
-    DetailFieldController,
-  ],
-  providers: [AdminMicroserviceController],
+  providers: [],
 })
 export class AdminModule {}

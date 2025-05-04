@@ -1,5 +1,6 @@
-import { IsString, IsNumber, IsOptional } from 'class-validator';
-import { Type } from 'class-transformer';
+import { IsString, IsNumber, IsOptional, IsEnum } from 'class-validator';
+import { AbstractionLevel } from '../../database/postgresql/interfaces/entities/abstract-level.interface';
+
 export class CreateEntityTypeDto {
   @IsString()
   name: string;
@@ -10,8 +11,8 @@ export class CreateEntityTypeDto {
   @IsString()
   description: string;
 
-  @IsString()
-  abstraction_level: string;
+  @IsEnum(AbstractionLevel)
+  abstractionLevel: AbstractionLevel;
 
   @IsNumber()
   plantId: number;
