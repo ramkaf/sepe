@@ -25,7 +25,7 @@ export class EntityFieldsPeriod {
   functionName: EntityFieldFunctionEnum;
 
   @OneToOne(() => EntityField, { onDelete: 'SET NULL' }) // به جای CASCADE از 'SET NULL' استفاده کردیم
-  @JoinColumn({ name: 'ef_id' })
+  @JoinColumn({ name: 'efId' })
   entityField: EntityField;
 
   @Column({ name: 'range_value', type: 'integer' })

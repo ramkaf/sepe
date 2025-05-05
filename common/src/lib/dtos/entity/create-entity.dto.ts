@@ -12,5 +12,5 @@ export class CreateEntityDto {
   parent_in_tree_id: number;
 
   @IsNumber()
-  entity_type_id: number;
+  etId: number;
 }

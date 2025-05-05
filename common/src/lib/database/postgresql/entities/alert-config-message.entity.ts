@@ -13,13 +13,13 @@ export class AlertConfigMessage {
   @PrimaryGeneratedColumn({ name: 'id' })
   id: number;
 
-  @Column({ name: 'ef_id' })
+  @Column({ name: 'efId' })
   efId: number;
 
   @ManyToOne(() => EntityField, (field) => field.alertConfigMessages, {
     onDelete: 'CASCADE',
   })
-  @JoinColumn({ name: 'ef_id' })
+  @JoinColumn({ name: 'efId' })
   entityField: EntityField;
 
   @Column({ name: 'condition', type: 'varchar', nullable: true })

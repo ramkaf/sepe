@@ -30,7 +30,7 @@ export class ChartDetail {
   chartId: number;
 
   @Column({ name: 'entity_type_id', type: 'int', nullable: true })
-  entityTypeId: number | null;
+  etId: number | null;
 
   @ManyToOne(() => Chart, (chart) => chart.chartDetails, {
     onDelete: 'CASCADE',
@@ -41,7 +41,7 @@ export class ChartDetail {
   @ManyToOne(() => EntityType, (entityType) => entityType.chartDetails, {
     nullable: true,
   })
-  @JoinColumn({ name: 'entity_type_id' })
+  @JoinColumn({ name: 'etId' })
   entityType: EntityType | null;
 
   @OneToMany(() => DetailsField, (detailsField) => detailsField.chartDetail)

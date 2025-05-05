@@ -38,7 +38,7 @@ export class EntityModel {
   parentInTreeId: number | null;
 
   @Column({ name: 'entity_type_id', type: 'int', nullable: true })
-  entityTypeId: number | null;
+  etId: number | null;
 
   @ManyToOne(() => EntityType, (entityType) => entityType.etId, {
     nullable: true,

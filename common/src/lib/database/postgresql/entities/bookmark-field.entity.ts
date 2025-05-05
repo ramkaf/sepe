@@ -21,7 +21,7 @@ export class BookmarkField {
   @ManyToOne(() => EntityField, (field) => field.bookmarkFields, {
     onDelete: 'CASCADE',
   })
-  @JoinColumn({ name: 'ef_id' })
+  @JoinColumn({ name: 'efId' })
   entityField: EntityField;
 
   @ManyToOne(() => User, (user) => user.bookmarkFields, {

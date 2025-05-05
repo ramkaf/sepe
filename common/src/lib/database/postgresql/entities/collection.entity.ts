@@ -47,7 +47,7 @@ export class CollectionEntity {
     },
     inverseJoinColumn: {
       name: 'entity_field_id',
-      referencedColumnName: 'ef_id',
+      referencedColumnName: 'efId',
     },
   })
   entityFields: EntityField[];

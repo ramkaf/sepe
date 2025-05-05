@@ -20,8 +20,9 @@ import { DetailFieldModule } from './detail-field/detail-field.module';
     RabbitMQModule.register([
       { name: ADMIN_RABBITMQ_SERVICE, queue: ADMIN_RABBITMQ_QUEUE },
     ]),
-    EntityTypeModule,
     PostgresModule,
+    EntityTypeModule,
+    EntityFieldModule,
     // EntityFieldModule,
     // EntityModel,
     // ChartModule,

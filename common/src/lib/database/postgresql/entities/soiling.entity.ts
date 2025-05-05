@@ -57,7 +57,7 @@ export class Soiling {
     },
     inverseJoinColumn: {
       name: 'field_id',
-      referencedColumnName: 'ef_id',
+      referencedColumnName: 'efId',
     },
   })
   entityFields: EntityField[];

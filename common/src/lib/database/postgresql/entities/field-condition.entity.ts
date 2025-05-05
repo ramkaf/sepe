@@ -20,14 +20,14 @@ export class EntityFieldCondition {
   @ManyToOne(() => EntityField, (field) => field.conditions, {
     onDelete: 'CASCADE',
   })
-  @JoinColumn({ name: 'ef_id' })
+  @JoinColumn({ name: 'efId' })
   entityField: EntityField;
 
   @ManyToOne(() => EntityField, (field) => field.dependentConditions, {
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE',
   })
-  @JoinColumn({ name: 'ef_id_depend' })
+  @JoinColumn({ name: 'efId_depend' })
   dependentField: EntityField;
 
   @Column({ type: 'integer', default: 0 })

@@ -1,6 +1,7 @@
 export * from './generals/plant-id.dto';
 
 export * from './generals/chart-entity-id.dto';
+export * from './generals/entity-field-id.dto';
 export * from './generals/chart-id.dto';
 export * from './generals/detail-id.dto';
 export * from './generals/entity-id.dto';
@@ -29,6 +30,7 @@ export * from './entity-fields/create-multiple-entity';
 export * from './entity-fields/get-multiple-entity.dto';
 export * from './entity-fields/update-entity.dto';
 export * from './entity-fields/update-multiple-entity.dto';
+export * from './entity-fields/read-entity-field.dto'
 
 export * from './entity-type/create-entity-type.dto';
 export * from './entity-type/create-multiple-entity-type';

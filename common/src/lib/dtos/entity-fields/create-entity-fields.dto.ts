@@ -1,50 +1,51 @@
 import {
+  IsArray,
   IsBoolean,
-  IsInt,
-  IsNotEmpty,
+  IsEnum,
   IsNumber,
   IsOptional,
   IsString,
   Matches,
-  MaxLength,
 } from 'class-validator';
+import { BrowserGroupEnum, EntityFieldTypeEnum } from '../../database';
 
 export class CreateEntityFieldDto {
   @IsString()
-  field_title: any;
+  fieldTitle: any;
 
   @IsString()
   @Matches(/^\S*$/, { message: 'field_tag must not contain spaces' })
-  field_tag: string;
+  fieldTag: string;
 
   @IsNumber()
-  entity_type_id: number;
+  etId: number;
 
   @IsOptional()
   @IsString()
   unit: string;
 
   @IsBoolean()
-  is_computational: boolean;
+  isComputational: boolean;
 
   @IsOptional()
-  last_value_function_name: string;
+  lastValueFunctionName: string;
 
   @IsOptional()
-  all_values_function_name: string;
+  allValuesFunctionName: string;
 
-  @IsString()
-  browser_group: string;
+  @IsArray()
+  @IsEnum(BrowserGroupEnum, { each: true })
+  browserGroup: BrowserGroupEnum[];
 
   @IsBoolean()
-  is_static: boolean;
+  isStatic: boolean;
 
   @IsOptional()
-  static_value: string;
+  staticValue: string;
 
   @IsOptional()
-  mask_function: string;
+  maskFunction: string;
 
-  @IsOptional()
-  field_type: string;
+  @IsEnum(EntityFieldTypeEnum)
+  fieldType: EntityFieldTypeEnum;
 }

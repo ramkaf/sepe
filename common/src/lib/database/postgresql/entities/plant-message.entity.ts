@@ -26,7 +26,7 @@ export class PlantMessage {
   psBitNo: number | null;
 
   @ManyToOne(() => EntityField, { nullable: false })
-  @JoinColumn({ name: 'ef_id' })
+  @JoinColumn({ name: 'efId' })
   entityField: EntityField; // Relation with entity_fields table
 
   @Column({ name: 'level', type: 'varchar', nullable: true })

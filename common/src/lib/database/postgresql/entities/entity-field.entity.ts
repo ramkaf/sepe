@@ -18,59 +18,58 @@ import { EntityFieldsPeriod } from './field-period.entity';
 import { Soiling } from './soiling.entity';
 import { DetailsField } from './detail-field.entity';
 import { CollectionEntity } from './collection.entity';
+import { browserGroupEntity } from './browser-group.entity';
+import { EntityFieldTypeEnum } from '../interfaces/entities/entity-field-type.interface';
 
 @SchemaEntity('main', 'entity_fields')
-@Unique(['field_tag', 'entity_type_id'])
+@Unique(['fieldTag', 'etId'])
 export class EntityField {
   @PrimaryGeneratedColumn({ name: 'ef_id' })
-  ef_id: number;
+  efId: number;
 
   @Column({ name: 'field_title', type: 'varchar' })
-  field_title: string | null;
+  fieldTitle: string | null;
 
   @Column({ name: 'field_tag', type: 'varchar' })
-  field_tag: string;
+  fieldTag: string;
 
   @Column({ name: 'unit', type: 'varchar', nullable: true })
   unit: string | null;
 
   @Column({ name: 'is_computational', type: 'boolean', default: false })
-  is_computational: boolean;
+  isComputational: boolean;
 
   @Column({ name: 'last_value_function_name', type: 'varchar', nullable: true })
-  last_value_function_name: string | null;
+  lastValueFunctionName: string | null;
 
   @Column({ name: 'all_values_function_name', type: 'varchar', nullable: true })
-  all_values_function_name: string | null;
-
-  @Column({ name: 'browser_group', type: 'varchar', default: 'Parameters' })
-  browser_group: string | null;
-
+  allValuesFunctionName: string | null;
+  
   @Column({ name: 'is_static', type: 'boolean', default: false })
-  is_static: boolean;
+  isStatic: boolean;
 
   @Column({ name: 'static_value', type: 'varchar', default: '' })
-  static_value: string;
+  staticValue: string;
 
   @Column({ name: 'mask_function', type: 'varchar', nullable: true })
-  mask_function: string | null;
+  maskFunction: string | null;
 
   @Column({
     name: 'field_type',
-    type: 'varchar',
-    length: 255,
-    default: 'value',
+    type: 'enum',
+    enum: EntityFieldTypeEnum,
+    default: EntityFieldTypeEnum.VALUE,
   })
-  field_type: string;
+  fieldType: EntityFieldTypeEnum;
 
   @Column({ name: 'default_cache_value', type: 'varchar', nullable: true })
-  default_cache_value: string | null;
+  defaultCacheValue: string | null;
 
   @Column({ name: 'entity_type_id', type: 'int' })
-  entity_type_id: number | null;
+  etId: number | null;
 
   @ManyToOne(() => EntityType)
-  @JoinColumn({ name: 'entity_type_id' })
+  @JoinColumn({ name: 'etId' })
   entity_type: EntityType;
 
   @OneToMany(() => AlertConfigMessage, (msg) => msg.entityField)
@@ -105,4 +104,7 @@ export class EntityField {
 
   @ManyToMany(() => CollectionEntity, (collection) => collection.entityFields)
   collections: CollectionEntity[];
+
+  @OneToMany(() => browserGroupEntity, (bwe) => bwe.entityField)
+  browserGroup: browserGroupEntity[];
 }

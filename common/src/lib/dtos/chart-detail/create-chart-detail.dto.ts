@@ -19,5 +19,5 @@ export class CreateChartDetailDto {
   @IsOptional()
   @Type(() => Number)
   @IsNumber()
-  entity_type_id?: number;
+  etId?: number;
 }

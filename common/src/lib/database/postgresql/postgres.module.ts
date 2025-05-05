@@ -27,6 +27,7 @@ import { FleetManager } from './entities/fleat-manager.entity';
 import { CollectionEntity } from './entities/collection.entity';
 import { DocumentEntity } from './entities/document.entity';
 import { ApiLog } from './entities/log.entity';
+import { browserGroupEntity } from './entities/browser-group.entity';
 
 @Module({
   imports: [
@@ -66,6 +67,7 @@ import { ApiLog } from './entities/log.entity';
           AlarmConfigEntity,
           CollectionEntity,
           DocumentEntity,
+          browserGroupEntity
         ],
         synchronize: configService.get<boolean>('POSTGRES_SYNCHRONIZE', false),
         logging: configService.get<boolean>('POSTGRES_LOGGING', true),
