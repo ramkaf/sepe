@@ -15,7 +15,7 @@ import { EntityFieldMicroserviceController } from './entity-field.controller';
     RabbitMQModule.register([
       { name: ADMIN_RABBITMQ_SERVICE, queue: ADMIN_RABBITMQ_QUEUE },
     ]),
-    TypeOrmModule.forFeature([EntityField , browserGroupEntity])
+    TypeOrmModule.forFeature([EntityField, browserGroupEntity]),
   ],
   controllers: [EntityFieldMicroserviceController],
   providers: [EntityFieldService],

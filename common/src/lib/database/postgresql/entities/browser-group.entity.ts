@@ -1,4 +1,12 @@
-import { Column, Index, JoinColumn, ManyToOne, OneToMany, PrimaryColumn, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Index,
+  JoinColumn,
+  ManyToOne,
+  OneToMany,
+  PrimaryColumn,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 import { EntityField } from './entity-field.entity';
 import { SchemaEntity } from '../decorators/schema-entity.decorator';
 import { BrowserGroupEnum } from '../interfaces/entities/browser-group.interface';

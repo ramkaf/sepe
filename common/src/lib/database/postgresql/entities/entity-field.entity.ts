@@ -44,7 +44,7 @@ export class EntityField {
 
   @Column({ name: 'all_values_function_name', type: 'varchar', nullable: true })
   allValuesFunctionName: string | null;
-  
+
   @Column({ name: 'is_static', type: 'boolean', default: false })
   isStatic: boolean;
 

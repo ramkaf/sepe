@@ -20,7 +20,7 @@ export class EntityFieldService {
     @InjectRepository(EntityField)
     private readonly entityFieldRepository: Repository<EntityField>,
     @InjectRepository(browserGroupEntity)
-    private readonly browserGroupRepository:Repository<browserGroupEntity>
+    private readonly browserGroupRepository: Repository<browserGroupEntity>
   ) {}
 
   // async read(readEntityFieldDto: ReadEntityFieldDto) {
@@ -42,11 +42,13 @@ export class EntityFieldService {
   // }
 
   async add(createEntityFieldDto: CreateEntityFieldDto): Promise<EntityField> {
-    const {browserGroup , ...rest} = createEntityFieldDto
-    const entityFieldSchema = this.entityFieldRepository.create(rest)
-    const entityField = await this.entityFieldRepository.save(entityFieldSchema) 
-    const browserGroups : browserGroupEntity[] = []
-    for (const group of browserGroup){
+    const { browserGroup, ...rest } = createEntityFieldDto;
+    const entityFieldSchema = this.entityFieldRepository.create(rest);
+    const entityField = await this.entityFieldRepository.save(
+      entityFieldSchema
+    );
+    const browserGroups: browserGroupEntity[] = [];
+    for (const group of browserGroup) {
       const bg = new browserGroupEntity();
       bg.name = group;
       bg.entityField = entityField;
@@ -55,7 +57,7 @@ export class EntityFieldService {
     await this.browserGroupRepository.save(browserGroups);
     return this.entityFieldRepository.findOne({
       where: { efId: entityField.efId },
-      relations: ['browserGroup']
+      relations: ['browserGroup'],
     });
   }
 

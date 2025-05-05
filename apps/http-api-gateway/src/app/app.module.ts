@@ -13,6 +13,6 @@ import {
       { name: ADMIN_RABBITMQ_SERVICE, queue: ADMIN_RABBITMQ_QUEUE },
     ]),
   ],
-  controllers: [EntityTypeController , EntityFieldController],
+  controllers: [EntityTypeController, EntityFieldController],
 })
 export class AppModule {}

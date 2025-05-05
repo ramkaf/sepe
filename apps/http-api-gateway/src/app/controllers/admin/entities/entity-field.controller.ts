@@ -21,12 +21,9 @@ export class EntityFieldController {
     return firstValueFrom(result);
   }
 
-
   @Post('/many')
   async createManyEntityField(@Body() data: CreateEntityFieldArrayDto) {
     const result = this.rabbitClient.send(ENTITY_FIELD_MULTIPLE_CREATED, data);
     return firstValueFrom(result);
   }
-
-  
 }

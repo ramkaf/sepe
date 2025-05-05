@@ -67,7 +67,7 @@ import { browserGroupEntity } from './entities/browser-group.entity';
           AlarmConfigEntity,
           CollectionEntity,
           DocumentEntity,
-          browserGroupEntity
+          browserGroupEntity,
         ],
         synchronize: configService.get<boolean>('POSTGRES_SYNCHRONIZE', false),
         logging: configService.get<boolean>('POSTGRES_LOGGING', true),
