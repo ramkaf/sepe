@@ -27,10 +27,10 @@ async function bootstrap() {
   );
   app.useGlobalPipes(
     new ValidationPipe({
-      whitelist: true, 
+      whitelist: true,
       forbidNonWhitelisted: true,
-      transform: true,        
-    }),
+      transform: true,
+    })
   );
 
   app.listen().then(() => {

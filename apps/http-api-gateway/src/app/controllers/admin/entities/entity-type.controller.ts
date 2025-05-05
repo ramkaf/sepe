@@ -67,7 +67,7 @@ export class EntityTypeController {
   @Delete()
   async deleteEntityType(@Query() data: EntityTypeIdDto) {
     console.log(data);
-    
+
     const result = this.rabbitClient.send(ENTITY_TYPE_REMOVED, data);
     return firstValueFrom(result);
   }

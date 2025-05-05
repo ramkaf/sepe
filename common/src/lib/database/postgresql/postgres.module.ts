@@ -80,8 +80,8 @@ export class PostgresModule implements OnModuleInit {
   async onModuleInit() {
     await this.ensureSchemasExist();
     await this.ensureEntityTypeSequenceStartsAt233();
-    await this.ensureEntitySequenceStartsAt944()
-    await this.ensureEntityFieldSequenceStartsAt4372()
+    await this.ensureEntitySequenceStartsAt944();
+    await this.ensureEntityFieldSequenceStartsAt4372();
   }
 
   private async ensureSchemasExist(): Promise<void> {
@@ -148,7 +148,7 @@ export class PostgresModule implements OnModuleInit {
       await queryRunner.release();
     }
   }
-  private async ensureEntityFieldSequenceStartsAt4372(): Promise<void> {  
+  private async ensureEntityFieldSequenceStartsAt4372(): Promise<void> {
     const queryRunner = this.dataSource.createQueryRunner();
     try {
       await queryRunner.connect();
@@ -164,7 +164,10 @@ export class PostgresModule implements OnModuleInit {
         END $$;
       `);
     } catch (error) {
-      console.error('Error ensuring entity field sequence starts at 4372:', error);
+      console.error(
+        'Error ensuring entity field sequence starts at 4372:',
+        error
+      );
       throw error;
     } finally {
       await queryRunner.release();
