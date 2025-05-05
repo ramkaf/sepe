@@ -105,6 +105,6 @@ export class EntityField {
   @ManyToMany(() => CollectionEntity, (collection) => collection.entityFields)
   collections: CollectionEntity[];
 
-  @OneToMany(() => browserGroupEntity, (bwe) => bwe.entityField)
+  @OneToMany(() => browserGroupEntity, (bwe) => bwe.efId)
   browserGroup: browserGroupEntity[];
 }

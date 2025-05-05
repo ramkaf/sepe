@@ -12,7 +12,7 @@ import { SchemaEntity } from '../decorators/schema-entity.decorator';
 import { BrowserGroupEnum } from '../interfaces/entities/browser-group.interface';
 
 @SchemaEntity('main', 'browser_group')
-@Index(['entityField', 'name'])
+@Index(['efId', 'name'])
 export class browserGroupEntity {
   @PrimaryGeneratedColumn()
   id: number;
@@ -25,6 +25,6 @@ export class browserGroupEntity {
   name: BrowserGroupEnum;
 
   @ManyToOne(() => EntityField, { nullable: false })
-  @JoinColumn({ name: 'entityFieldId' })
-  entityField: EntityField;
+  @JoinColumn({ name: 'efId' })
+  efId: EntityField;
 }
