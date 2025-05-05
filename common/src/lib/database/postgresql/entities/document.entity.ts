@@ -1,7 +1,8 @@
 import { Entity, PrimaryColumn, Column, ManyToOne, JoinColumn } from 'typeorm';
 import { EntityModel } from './entity.entity'; // assuming you have it
+import { SchemaEntity } from '../decorators/schema-entity.decorator';
 
-@Entity('documents')
+@SchemaEntity('main' , 'document')
 export class DocumentEntity {
   @PrimaryColumn({ name: 'doc_id', type: 'varchar', length: 100 })
   docId: string;

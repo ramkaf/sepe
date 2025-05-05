@@ -18,10 +18,10 @@ import { DetailFieldModule } from './detail-field/detail-field.module';
   imports: [
     ConfigModule.forRoot(),
     RabbitMQModule.register([
-      { name: ADMIN_RABBITMQ_SERVICE, queue: ADMIN_RABBITMQ_QUEUE }
+      { name: ADMIN_RABBITMQ_SERVICE, queue: ADMIN_RABBITMQ_QUEUE },
     ]),
     EntityTypeModule,
-    PostgresModule
+    PostgresModule,
     // EntityFieldModule,
     // EntityModel,
     // ChartModule,

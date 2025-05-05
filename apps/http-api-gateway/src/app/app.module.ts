@@ -12,11 +12,9 @@ import {
 @Module({
   imports: [
     RabbitMQModule.register([
-      {name : ADMIN_RABBITMQ_SERVICE , queue : ADMIN_RABBITMQ_QUEUE}
-    ])
+      { name: ADMIN_RABBITMQ_SERVICE, queue: ADMIN_RABBITMQ_QUEUE },
+    ]),
   ],
-  controllers: [
-    EntityTypeController
-  ]
+  controllers: [EntityTypeController],
 })
 export class AppModule {}

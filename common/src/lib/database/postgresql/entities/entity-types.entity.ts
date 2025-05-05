@@ -1,4 +1,4 @@
-import { Column, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Index, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { SchemaEntity } from '../decorators/schema-entity.decorator';
 import { AbstractionLevel } from '../interfaces/entities/abstract-level.interface';
 import { EntityModel } from './entity.entity';

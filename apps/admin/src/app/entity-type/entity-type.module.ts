@@ -5,8 +5,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { EntityType } from '@sephrmicroservice-monorepo/common';
 
 @Module({
-  imports : [TypeOrmModule.forFeature([EntityType])],
-    controllers: [EntityTypeMicroserviceController],
+  imports: [TypeOrmModule.forFeature([EntityType])],
+  controllers: [EntityTypeMicroserviceController],
   providers: [EntityTypeService],
 })
 export class EntityTypeModule {}

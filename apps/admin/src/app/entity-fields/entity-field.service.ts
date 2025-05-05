@@ -8,5 +8,4 @@ export class EntityFieldService {
     @Inject(ADMIN_RABBITMQ_SERVICE)
     private readonly rabbitClient: ClientProxy
   ) {}
-
 }

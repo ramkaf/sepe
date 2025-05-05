@@ -4,5 +4,5 @@ import { EntityFieldService } from './entity-field.service';
 
 @Controller()
 export class EntityFieldMicroserviceController {
-  constructor(private readonly entityFieldService: EntityFieldService) {} 
+  constructor(private readonly entityFieldService: EntityFieldService) {}
 }

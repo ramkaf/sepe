@@ -79,6 +79,9 @@ export class PostgresModule implements OnModuleInit {
   private requiredSchemas = Object.values(PostgresSchemasEnum);
   async onModuleInit() {
     await this.ensureSchemasExist();
+    await this.ensureEntityTypeSequenceStartsAt233();
+    await this.ensureEntitySequenceStartsAt944()
+    await this.ensureEntityFieldSequenceStartsAt4372()
   }
 
   private async ensureSchemasExist(): Promise<void> {
@@ -96,6 +99,72 @@ export class PostgresModule implements OnModuleInit {
     } catch (error) {
       const e = error as Error;
       console.error('Error ensuring schemas exist:', error);
+      throw error;
+    } finally {
+      await queryRunner.release();
+    }
+  }
+  private async ensureEntityTypeSequenceStartsAt233(): Promise<void> {
+    const queryRunner = this.dataSource.createQueryRunner();
+    try {
+      await queryRunner.connect();
+      await queryRunner.query(`
+        DO $$
+        DECLARE
+          current_value bigint;
+        BEGIN
+          SELECT last_value INTO current_value FROM main.entity_types_et_id_seq;
+          IF current_value < 233 THEN
+            ALTER SEQUENCE main.entity_types_et_id_seq RESTART WITH 233;
+          END IF;
+        END $$;
+      `);
+    } catch (error) {
+      console.error('Error ensuring sequence starts at 233:', error);
+      throw error;
+    } finally {
+      await queryRunner.release();
+    }
+  }
+  private async ensureEntitySequenceStartsAt944(): Promise<void> {
+    const queryRunner = this.dataSource.createQueryRunner();
+    try {
+      await queryRunner.connect();
+      await queryRunner.query(`
+        DO $$
+        DECLARE
+          current_value bigint;
+        BEGIN
+          SELECT last_value INTO current_value FROM main.entity_e_id_seq;
+          IF current_value < 944 THEN
+            ALTER SEQUENCE main.entity_e_id_seq RESTART WITH 944;
+          END IF;
+        END $$;
+      `);
+    } catch (error) {
+      console.error('Error ensuring entity sequence starts at 944:', error);
+      throw error;
+    } finally {
+      await queryRunner.release();
+    }
+  }
+  private async ensureEntityFieldSequenceStartsAt4372(): Promise<void> {  
+    const queryRunner = this.dataSource.createQueryRunner();
+    try {
+      await queryRunner.connect();
+      await queryRunner.query(`
+        DO $$
+        DECLARE
+          current_value bigint;
+        BEGIN
+          SELECT last_value INTO current_value FROM main.entity_fields_ef_id_seq;
+          IF current_value < 4372 THEN
+            ALTER SEQUENCE main.entity_fields_ef_id_seq RESTART WITH 4372;
+          END IF;
+        END $$;
+      `);
+    } catch (error) {
+      console.error('Error ensuring entity field sequence starts at 4372:', error);
       throw error;
     } finally {
       await queryRunner.release();

@@ -7,6 +7,7 @@ export * from './generals/entity-id.dto';
 export * from './generals/entity-type-id.dto';
 export * from './generals/plant-id.dto';
 
+export * from './entity-type/read-entity-type.dto';
 export * from './entity-type/create-entity-type.dto';
 export * from './entity-type/create-multiple-entity-type';
 export * from './entity-type/get-multiple-entity-type.dto';

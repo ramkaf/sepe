@@ -1,3 +1,3 @@
 export * from './constants';
-export * from './patterns/entities.constants';
+export * from './patterns/entity-type.constants';
 export * from './rabbitmq.module';
