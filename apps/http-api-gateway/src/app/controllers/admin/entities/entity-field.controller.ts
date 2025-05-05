@@ -1,4 +1,13 @@
-import { Body, Controller, Delete, Get, Inject, Patch, Post, Query } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Inject,
+  Patch,
+  Post,
+  Query,
+} from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
 import {
   ADMIN_RABBITMQ_SERVICE,
@@ -35,7 +44,6 @@ export class EntityFieldController {
     return firstValueFrom(result);
   }
 
-    
   @Patch()
   async updateEntityField(@Body() data: UpdateEntityFieldDto) {
     const result = this.rabbitClient.send(ENTITY_FIELD_UPDATED, data);
@@ -48,8 +56,6 @@ export class EntityFieldController {
     return firstValueFrom(result);
   }
 
-
-      
   @Delete()
   async deleteEntityField(@Query() data: EntityFieldIdDto) {
     const result = this.rabbitClient.send(ENTITY_FIELD_REMOVED, data);

@@ -41,9 +41,10 @@ export class EntityFieldMicroserviceController {
     return await this.entityFieldService.modify(updateEntityFieldDto);
   }
 
-  
   @MessagePattern(ENTITY_FIELD_MULTIPLE_UPDATED)
-  async updateMany(@Payload() updateEntityFieldDto: UpdateMultipleEntityFieldDto) {
+  async updateMany(
+    @Payload() updateEntityFieldDto: UpdateMultipleEntityFieldDto
+  ) {
     return await this.entityFieldService.modifyMany(updateEntityFieldDto);
   }
 

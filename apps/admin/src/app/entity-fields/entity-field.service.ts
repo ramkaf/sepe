@@ -56,46 +56,51 @@ export class EntityFieldService {
     );
   }
 
-  async modify(updateEntityFieldDto: UpdateEntityFieldDto): Promise<EntityField> {
-  const { efId, browserGroup, ...rest } = updateEntityFieldDto;
-  const ef = await this.entityFieldRepository.update({ efId }, rest);
-  const entityField = await this.entityFieldRepository.findOne({
-    where: { efId },
-    relations: ['browserGroup'],
-  });
-  
-  if (!entityField) {
-    throw new Error(`Entity field with ID ${efId} not found`);
-  }
+  async modify(
+    updateEntityFieldDto: UpdateEntityFieldDto
+  ): Promise<EntityField> {
+    const { efId, browserGroup, ...rest } = updateEntityFieldDto;
+    const ef = await this.entityFieldRepository.update({ efId }, rest);
+    const entityField = await this.entityFieldRepository.findOne({
+      where: { efId },
+      relations: ['browserGroup'],
+    });
 
-  const existingBrowserGroups = new Map<BrowserGroupEnum, browserGroupEntity>();
-  if (entityField.browserGroup && entityField.browserGroup.length > 0) {
-    for (const bg of entityField.browserGroup) {
-      existingBrowserGroups.set(bg.name, bg);
+    if (!entityField) {
+      throw new Error(`Entity field with ID ${efId} not found`);
     }
-  }
-  const browserGroupsToAdd: browserGroupEntity[] = [];
-  for (const groupName of browserGroup) {
-    if (!existingBrowserGroups.has(groupName)) {
-      const newBrowserGroup = new browserGroupEntity();
-      newBrowserGroup.name = groupName;
-      newBrowserGroup.efId = entityField;
-      browserGroupsToAdd.push(newBrowserGroup);
-    }
-    existingBrowserGroups.delete(groupName);
-  }
-  if (browserGroupsToAdd.length > 0) {
-    await this.browserGroupRepository.save(browserGroupsToAdd);
-  }
 
-  if (existingBrowserGroups.size > 0) {
-    const browserGroupsToRemove = Array.from(existingBrowserGroups.values());
-    await this.browserGroupRepository.remove(browserGroupsToRemove);
-  }
-  return this.entityFieldRepository.findOne({
-    where: { efId },
-    relations: ['browserGroup'],
-  });
+    const existingBrowserGroups = new Map<
+      BrowserGroupEnum,
+      browserGroupEntity
+    >();
+    if (entityField.browserGroup && entityField.browserGroup.length > 0) {
+      for (const bg of entityField.browserGroup) {
+        existingBrowserGroups.set(bg.name, bg);
+      }
+    }
+    const browserGroupsToAdd: browserGroupEntity[] = [];
+    for (const groupName of browserGroup) {
+      if (!existingBrowserGroups.has(groupName)) {
+        const newBrowserGroup = new browserGroupEntity();
+        newBrowserGroup.name = groupName;
+        newBrowserGroup.efId = entityField;
+        browserGroupsToAdd.push(newBrowserGroup);
+      }
+      existingBrowserGroups.delete(groupName);
+    }
+    if (browserGroupsToAdd.length > 0) {
+      await this.browserGroupRepository.save(browserGroupsToAdd);
+    }
+
+    if (existingBrowserGroups.size > 0) {
+      const browserGroupsToRemove = Array.from(existingBrowserGroups.values());
+      await this.browserGroupRepository.remove(browserGroupsToRemove);
+    }
+    return this.entityFieldRepository.findOne({
+      where: { efId },
+      relations: ['browserGroup'],
+    });
   }
   async modifyMany(
     UpdateMultipleEntityFieldDto: UpdateMultipleEntityFieldDto
@@ -109,14 +114,15 @@ export class EntityFieldService {
     );
   }
 
-  async remove (entityFieldIdDto:EntityFieldIdDto):Promise<EntityField>{
-    const {efId} = entityFieldIdDto
+  async remove(entityFieldIdDto: EntityFieldIdDto): Promise<EntityField> {
+    const { efId } = entityFieldIdDto;
     await this.browserGroupRepository.delete({ efId: { efId } });
-    const entityField = await this.entityFieldRepository.findOne({where : {efId}})
-    if (!entityField)
-      throw new Error(`Entity field with ID ${efId} not found`);
-    await this.entityFieldRepository.remove(entityField)
-    return entityField
+    const entityField = await this.entityFieldRepository.findOne({
+      where: { efId },
+    });
+    if (!entityField) throw new Error(`Entity field with ID ${efId} not found`);
+    await this.entityFieldRepository.remove(entityField);
+    return entityField;
   }
   async removeMany(
     getEntityFieldByIdArrayDto: GetEntityFieldByIdArrayDto
