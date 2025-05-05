@@ -5,7 +5,8 @@
   "scripts": {
     "start": "nx run-many --target=serve --all",
     "start:ms": "node start-ms.js",
-    "gen:resource": "nx g @nestjs/schematics:resource --project=$npm_config_ms --source-root=apps/$npm_config_ms/src --transport=rest --crud --name=$npm_config_module"
+    "gen:resource": "nx g @nestjs/schematics:resource --project=$npm_config_ms --source-root=apps/$npm_config_ms/src --transport=rest --crud --name=$npm_config_module",
+    "format": "npx prettier --write ."
   },
   "private": true,
   "dependencies": {
