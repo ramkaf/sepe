@@ -1,18 +1,25 @@
-import { Inject, Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  ConflictException,
+  Inject,
+  Injectable,
+} from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
 import { InjectRepository } from '@nestjs/typeorm';
 import {
   ADMIN_RABBITMQ_SERVICE,
+  BrowserGroupEnum,
   CreateEntityFieldArrayDto,
   CreateEntityFieldDto,
   EntityField,
   EntityFieldIdDto,
-  GetEntityFieldArrayByIdDto,
+  GetEntityFieldByIdArrayDto,
+  ReadEntityFieldDto,
   UpdateEntityFieldDto,
-  UpdateMultipleEntityFieldArrayDto,
+  UpdateMultipleEntityFieldDto,
 } from '@sephrmicroservice-monorepo/common';
 import { browserGroupEntity } from 'common/src/lib/database/postgresql/entities/browser-group.entity';
-import { Repository } from 'typeorm';
+import { Repository, SelectQueryBuilder } from 'typeorm';
 
 @Injectable()
 export class EntityFieldService {
@@ -22,27 +29,32 @@ export class EntityFieldService {
     @InjectRepository(browserGroupEntity)
     private readonly browserGroupRepository: Repository<browserGroupEntity>
   ) {}
+  async read(readEntityFieldDto: ReadEntityFieldDto): Promise<EntityField[]> {
+    const query = this.buildSearchQuery(readEntityFieldDto);
+    if (
+      readEntityFieldDto.browserGroups &&
+      readEntityFieldDto.browserGroups.length > 0
+    ) {
+      query.leftJoinAndSelect('entityField.browserGroup', 'browserGroup');
+    }
 
-  // async read(readEntityFieldDto: ReadEntityFieldDto) {
-  //   const { efId, tag, plantId } = readEntityFieldDto;
-  //   const queryBuilder =
-  //     this.entityFieldRepository.createQueryBuilder('entityType');
-
-  //   if (efId !== undefined)
-  //     queryBuilder.andWhere('entityType.efId = :efId', { efId });
-
-  //   if (plantId !== undefined)
-  //     queryBuilder.andWhere('entityType.plantId = :plantId', { plantId });
-
-  //   if (tag !== undefined)
-  //     queryBuilder.andWhere('entityType.tag = :tag', { tag });
-
-  //   const entityTypes = await queryBuilder.getMany();
-  //   return entityTypes;
-  // }
-
+    return await query.getMany();
+  }
   async add(createEntityFieldDto: CreateEntityFieldDto): Promise<EntityField> {
     const { browserGroup, ...rest } = createEntityFieldDto;
+    const { fieldTag, etId } = createEntityFieldDto;
+    const ensureEntityTagNotExist = await this.entityFieldRepository.find({
+      where: {
+        fieldTag,
+        etId,
+      },
+    });
+
+    if (ensureEntityTagNotExist)
+      throw new ConflictException(
+        `fieldTag:${fieldTag} are exist for entity type id :${etId}`
+      );
+
     const entityFieldSchema = this.entityFieldRepository.create(rest);
     const entityField = await this.entityFieldRepository.save(
       entityFieldSchema
@@ -61,60 +73,170 @@ export class EntityFieldService {
     });
   }
 
-  // async addMany(
-  //   createEntityFieldArrayDto: CreateEntityFieldArrayDto
-  // ): Promise<EntityField[]> {
-  //   return await Promise.all(
-  //     createEntityFieldArrayDto.data.map(
-  //       async (createEntityFieldDto: CreateEntityFieldDto) => {
-  //         return await this.add(createEntityFieldDto);
-  //       }
-  //     )
-  //   );
-  // }
+  async addMany(
+    createEntityFieldArrayDto: CreateEntityFieldArrayDto
+  ): Promise<EntityField[]> {
+    return await Promise.all(
+      createEntityFieldArrayDto.data.map(
+        async (createEntityFieldDto: CreateEntityFieldDto) => {
+          return await this.add(createEntityFieldDto);
+        }
+      )
+    );
+  }
 
-  // async modify(
-  //   updateEntityFieldDto: UpdateEntityFieldDto
-  // ): Promise<EntityField> {
-  //   const { efId, ...updateData } = updateEntityFieldDto;
-  //   const entityType = await this.entityFieldRepository.findOne({
-  //     where: { efId },
-  //   });
-  //   if (!entityType) {
-  //     throw new Error(`EntityField with efId ${efId} not found`);
-  //   }
-  //   Object.assign(entityType, updateData);
-  //   return await this.entityFieldRepository.save(entityType);
-  // }
+  async modify(
+    updateEntityFieldDto: UpdateEntityFieldDto
+  ): Promise<EntityField> {
+    const { efId, browserGroup, ...rest } = updateEntityFieldDto;
+    await this.entityFieldRepository.update({ efId }, rest);
+    const entityField = await this.entityFieldRepository.findOne({
+      where: { efId },
+      relations: ['browserGroup'],
+    });
 
-  // async modifyMany(
-  //   updateEntityFieldArrayDto: UpdateMultipleEntityFieldArrayDto
-  // ): Promise<EntityField[]> {
-  //   return await Promise.all(
-  //     updateEntityFieldArrayDto.data.map(async (dto: UpdateEntityFieldDto) => {
-  //       return await this.modify(dto);
-  //     })
-  //   );
-  // }
+    if (!entityField) {
+      throw new Error(`Entity field with ID ${efId} not found`);
+    }
 
-  // async remove(entityTypeIdDto: EntityFieldIdDto): Promise<EntityField> {
-  //   const { efId } = entityTypeIdDto;
-  //   const entityField = await this.entityFieldRepository.findOne({
-  //     where: { efId },
-  //   });
-  //   if (!entityField) {
-  //     throw new Error(`EntityField with efId ${efId} not found`);
-  //   }
-  //   return await this.entityFieldRepository.remove(entityField);
-  // }
+    const existingBrowserGroups = new Map<
+      BrowserGroupEnum,
+      browserGroupEntity
+    >();
+    if (entityField.browserGroup && entityField.browserGroup.length > 0) {
+      for (const bg of entityField.browserGroup) {
+        existingBrowserGroups.set(bg.name, bg);
+      }
+    }
+    const browserGroupsToAdd: browserGroupEntity[] = [];
+    for (const groupName of browserGroup) {
+      if (!existingBrowserGroups.has(groupName)) {
+        const newBrowserGroup = new browserGroupEntity();
+        newBrowserGroup.name = groupName;
+        newBrowserGroup.entityField = entityField;
+        browserGroupsToAdd.push(newBrowserGroup);
+      }
+      existingBrowserGroups.delete(groupName);
+    }
+    if (browserGroupsToAdd.length > 0) {
+      await this.browserGroupRepository.save(browserGroupsToAdd);
+    }
 
-  // async removeMany(
-  //   getEntityFieldByIdArrayDto: GetEntityFieldArrayByIdDto
-  // ): Promise<EntityField[]> {
-  //   return await Promise.all(
-  //     getEntityFieldByIdArrayDto.data.map(async (dto: EntityFieldIdDto) => {
-  //       return await this.remove(dto);
-  //     })
-  //   );
-  // }
+    if (existingBrowserGroups.size > 0) {
+      const browserGroupsToRemove = Array.from(existingBrowserGroups.values());
+      await this.browserGroupRepository.remove(browserGroupsToRemove);
+    }
+    return this.entityFieldRepository.findOne({
+      where: { efId },
+      relations: ['browserGroup'],
+    });
+  }
+  async modifyMany(
+    UpdateMultipleEntityFieldDto: UpdateMultipleEntityFieldDto
+  ): Promise<EntityField[]> {
+    return await Promise.all(
+      UpdateMultipleEntityFieldDto.data.map(
+        async (updateEntityFieldDto: UpdateEntityFieldDto) => {
+          return await this.modify(updateEntityFieldDto);
+        }
+      )
+    );
+  }
+
+  async remove(entityFieldIdDto: EntityFieldIdDto): Promise<EntityField> {
+    const { efId } = entityFieldIdDto;
+    await this.browserGroupRepository.delete({ efId });
+    const entityField = await this.entityFieldRepository.findOne({
+      where: { efId },
+    });
+    if (!entityField) throw new Error(`Entity field with ID ${efId} not found`);
+    await this.entityFieldRepository.remove(entityField);
+    return entityField;
+  }
+  async removeMany(
+    getEntityFieldByIdArrayDto: GetEntityFieldByIdArrayDto
+  ): Promise<EntityField[]> {
+    return await Promise.all(
+      getEntityFieldByIdArrayDto.data.map(
+        async (entityFieldIdDto: EntityFieldIdDto) => {
+          return await this.remove(entityFieldIdDto);
+        }
+      )
+    );
+  }
+  private buildSearchQuery(
+    filters: ReadEntityFieldDto
+  ): SelectQueryBuilder<EntityField> {
+    const query = this.entityFieldRepository.createQueryBuilder('entityField');
+    if (filters.efId !== undefined) {
+      query.andWhere('entityField.efId = :efId', { efId: filters.efId });
+    }
+
+    if (filters.etId !== undefined) {
+      query.andWhere('entityField.etId = :etId', { etId: filters.etId });
+    }
+
+    if (filters.fieldTag !== undefined) {
+      query.andWhere('entityField.fieldTag = :fieldTag', {
+        fieldTag: filters.fieldTag,
+      });
+    }
+
+    if (filters.fieldTagLike !== undefined) {
+      query.andWhere('entityField.fieldTag LIKE :fieldTagLike', {
+        fieldTagLike: `%${filters.fieldTagLike}%`,
+      });
+    }
+    if (filters.fieldTagLike !== undefined) {
+      query.andWhere('entityField.fieldTag LIKE :fieldTagLike', {
+        fieldTagLike: `%${filters.fieldTagLike}%`,
+      });
+    }
+
+    if (filters.isStatic !== undefined) {
+      query.andWhere('entityField.isStatic = :isStatic', {
+        isStatic: filters.isStatic,
+      });
+    }
+
+    if (filters.isComputational !== undefined) {
+      query.andWhere('entityField.isComputational = :isComputational', {
+        isComputational: filters.isComputational,
+      });
+    }
+    if (filters.browserGroups && filters.browserGroups.length > 0) {
+      this.applyBrowserGroupFilters(query, filters.browserGroups);
+    }
+
+    return query;
+  }
+
+  private applyBrowserGroupFilters(
+    query: SelectQueryBuilder<EntityField>,
+    browserGroups: BrowserGroupEnum[]
+  ): void {
+    browserGroups.forEach((group, index) => {
+      const alias = `bg${index}`;
+      query
+        .andWhere((qb) => {
+          const subQuery = qb
+            .subQuery()
+            .select('1')
+            .from(browserGroupEntity, alias)
+            .where(`${alias}.efId = entityField.efId`)
+            .andWhere(`${alias}.name = :browserGroup${index}`);
+
+          return `EXISTS ${subQuery.getQuery()}`;
+        })
+        .setParameter(`browserGroup${index}`, group);
+    });
+  }
+  async getBrowserGroupOptions(): Promise<BrowserGroupEnum[]> {
+    const browserGroups = await this.browserGroupRepository
+      .createQueryBuilder('bg')
+      .select('DISTINCT bg.name', 'name')
+      .getRawMany();
+
+    return browserGroups.map((group) => group.name);
+  }
 }

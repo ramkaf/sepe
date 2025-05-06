@@ -1,18 +1,51 @@
-import { IsInt, IsOptional, IsString } from 'class-validator';
-import { Type } from 'class-transformer';
+import {
+  IsArray,
+  IsBoolean,
+  IsEnum,
+  IsNumber,
+  IsOptional,
+  IsString,
+} from 'class-validator';
+import { Transform, Type } from 'class-transformer';
+import { BrowserGroupEnum } from '../../database';
 
 export class ReadEntityFieldDto {
   @IsOptional()
-  @IsInt()
-  @Type(() => Number)
+  @IsNumber()
   efId?: number;
+
+  @IsOptional()
+  @IsNumber()
+  etId?: number;
 
   @IsOptional()
   @IsString()
   fieldTag?: string;
 
   @IsOptional()
-  @IsInt()
-  @Type(() => Number)
-  etId?: number;
+  @IsBoolean()
+  @Transform(({ value }) => {
+    if (value === 'true') return true;
+    if (value === 'false') return false;
+    return value;
+  })
+  isStatic?: boolean;
+
+  @IsOptional()
+  @IsBoolean()
+  @Transform(({ value }) => {
+    if (value === 'true') return true;
+    if (value === 'false') return false;
+    return value;
+  })
+  isComputational?: boolean;
+
+  @IsOptional()
+  @IsString()
+  fieldTagLike?: string;
+
+  @IsOptional()
+  @IsArray()
+  @IsEnum(BrowserGroupEnum, { each: true })
+  browserGroups?: BrowserGroupEnum[];
 }

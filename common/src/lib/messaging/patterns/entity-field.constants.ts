@@ -1,3 +1,5 @@
+export const BROWSER_GROUP_READ = 'browser_group.read';
+
 export const ENTITY_FIELD_READ = 'entity_field.read';
 export const ENTITY_FIELD_CREATED = 'entity_field.created';
 export const ENTITY_FIELD_UPDATED = 'entity_field.updated';
