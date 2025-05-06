@@ -9,7 +9,7 @@ import {
 } from 'typeorm';
 import { EntityField } from './entity-field.entity';
 import { SchemaEntity } from '../decorators/schema-entity.decorator';
-import { BrowserGroupEnum } from '../interfaces/entities/browser-group.interface';
+import { BrowserGroupEnum } from 'common/src/lib/enums';
 
 @SchemaEntity('main', 'browser_group')
 @Index(['efId', 'name'])

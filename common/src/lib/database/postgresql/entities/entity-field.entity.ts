@@ -19,7 +19,8 @@ import { Soiling } from './soiling.entity';
 import { DetailsField } from './detail-field.entity';
 import { CollectionEntity } from './collection.entity';
 import { browserGroupEntity } from './browser-group.entity';
-import { EntityFieldTypeEnum } from '../interfaces/entities/entity-field-type.interface';
+import { EntityFieldTypeEnum } from 'common/src/lib/enums';
+import { UnitEnum } from 'common/src/lib/enums/entities/unit.interface';
 
 @SchemaEntity('main', 'entity_fields')
 @Unique(['fieldTag', 'etId'])
@@ -33,8 +34,14 @@ export class EntityField {
   @Column({ name: 'field_tag', type: 'varchar' })
   fieldTag: string;
 
-  @Column({ name: 'unit', type: 'varchar', nullable: true })
-  unit: string | null;
+  @Column({
+    name: 'unit',
+    type: 'enum',
+    enum: UnitEnum,
+    default: null,
+    nullable: true,
+  })
+  unit: UnitEnum;
 
   @Column({ name: 'is_computational', type: 'boolean', default: false })
   isComputational: boolean;

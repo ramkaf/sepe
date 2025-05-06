@@ -1,10 +1,10 @@
 import { Type } from 'class-transformer';
 import { IsArray, ValidateNested } from 'class-validator';
-import { EntityIdDto } from '../generals/entity-id.dto';
+import { ChartIdDto } from '../generals/chart-id.dto';
 
-export class GetMultipleEntityByIdDto {
+export class GetMultipleChartByIdDto {
   @IsArray()
   @ValidateNested({ each: true })
-  @Type(() => EntityIdDto)
-  data: EntityIdDto[];
+  @Type(() => ChartIdDto)
+  data: ChartIdDto[];
 }

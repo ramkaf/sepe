@@ -8,8 +8,10 @@ import {
 } from 'typeorm';
 import { SchemaEntity } from '../decorators/schema-entity.decorator';
 import { EntityField } from './entity-field.entity';
-import { EntityFieldFunctionEnum } from '../interfaces/entities/entity-field-condition-functions-enum';
-import { EntityFieldConditionOperatorEnum } from '../interfaces/entities/entity-fields-condition-operators.enum';
+import {
+  EntityFieldFunctionEnum,
+  EntityFieldConditionOperatorEnum,
+} from 'common/src/lib/enums';
 
 @SchemaEntity('main', 'entity_field_condition')
 @Unique(['entityField', 'dependentField'])

@@ -7,9 +7,8 @@ import {
   OneToOne,
 } from 'typeorm';
 import { SchemaEntity } from '../decorators/schema-entity.decorator';
-import { EntityFieldFunctionEnum } from '../interfaces/entities/entity-field-condition-functions-enum';
+import { EntityFieldFunctionEnum, RangeTypeEnum } from 'common/src/lib/enums';
 import { EntityField } from './entity-field.entity';
-import { RangeTypeEnum } from '../interfaces/time-range.enum';
 
 @SchemaEntity('main', 'fields_period')
 export class EntityFieldsPeriod {

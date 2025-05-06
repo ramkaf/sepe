@@ -13,6 +13,7 @@ import {
 } from '@sephrmicroservice-monorepo/common';
 import { ChartModule } from './chart/chart.module';
 import { DetailFieldModule } from './detail-field/detail-field.module';
+import { EntityModule } from './entity/entity.module';
 
 @Module({
   imports: [
@@ -23,9 +24,8 @@ import { DetailFieldModule } from './detail-field/detail-field.module';
     PostgresModule,
     EntityTypeModule,
     EntityFieldModule,
-    // EntityFieldModule,
-    // EntityModel,
-    // ChartModule,
+    EntityModule,
+    ChartModule
     // ChartDetail,
     // DetailFieldModule,
   ],

@@ -1,5 +1,5 @@
 import { IsString, IsNumber, IsEnum } from 'class-validator';
-import { AbstractionLevel } from '../../database/postgresql/interfaces/entities/abstract-level.interface';
+import { AbstractionLevel } from 'common/src/lib/enums';
 
 export class CreateEntityTypeDto {
   @IsString()

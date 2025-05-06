@@ -1,13 +1,6 @@
-import {
-  BadRequestException,
-  ConflictException,
-  Inject,
-  Injectable,
-} from '@nestjs/common';
-import { ClientProxy } from '@nestjs/microservices';
+import { ConflictException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import {
-  ADMIN_RABBITMQ_SERVICE,
   BrowserGroupEnum,
   CreateEntityFieldArrayDto,
   CreateEntityFieldDto,

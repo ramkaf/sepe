@@ -3,7 +3,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { Collection, DataSource } from 'typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { User } from './entities/user.entity';
-import { PostgresSchemasEnum } from './interfaces/schemas.enum';
+import { PostgresSchemasEnum } from 'common/src/lib/enums';
 import { EntityType } from './entities/entity-types.entity';
 import { EntityModel } from './entities/entity.entity';
 import { AlarmConfigEntity } from './entities/alarm-config.entity';

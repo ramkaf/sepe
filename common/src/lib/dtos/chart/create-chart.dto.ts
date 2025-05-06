@@ -1,21 +1,25 @@
 import { Type } from 'class-transformer';
-import { IsNumber, IsString } from 'class-validator';
+import { IsEnum, IsInt, IsNumber, IsOptional, IsString } from 'class-validator';
+import { TimeGroupTypeEnum } from '../../enums';
 
 export class CreateChartDto {
+  @IsInt()
   @Type(() => Number)
-  @IsNumber()
   plantId: number;
 
+  @IsOptional()
   @IsString()
-  chart_title: string;
+  chartTitle?: string;
 
+  @IsOptional()
   @IsString()
-  chart_des: string;
+  chartDes: string;
 
+  @IsInt()
   @Type(() => Number)
-  @IsNumber()
-  time_group: number;
+  timeGroup: number;
 
-  @IsString()
-  time_group_type: string;
+  @IsOptional()
+  @IsEnum(TimeGroupTypeEnum)
+  timeGroupType: TimeGroupTypeEnum;
 }
