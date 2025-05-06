@@ -1,6 +1,6 @@
 import { Column, Index, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { SchemaEntity } from '../decorators/schema-entity.decorator';
-import { AbstractionLevel } from '../interfaces/entities/abstract-level.interface';
+import { AbstractionLevel } from 'common/src/lib/enums';
 import { EntityModel } from './entity.entity';
 import { Soiling } from './soiling.entity';
 import { ChartDetail } from './chart-detail.entity';

@@ -5,4 +5,6 @@ export enum BrowserGroupEnum {
   PARAMETERS = 'Parameters',
   GENERALCONFIG = 'GeneralConfig',
   SETTING = 'Settings',
+  INACTIVE = 'InActive',
+  SUBSCRIPTION = 'Subscription',
 }

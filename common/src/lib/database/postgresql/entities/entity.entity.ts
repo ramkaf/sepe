@@ -49,15 +49,6 @@ export class EntityModel {
   @ManyToMany(() => User, (user) => user.entities)
   users: User[];
 
-  @OneToMany(() => Chart, (chart) => chart.plant)
-  charts: Chart[];
-
-  @OneToMany(() => Soiling, (soiling) => soiling.baseEntity)
-  baseSoilings: Soiling[];
-
-  @OneToMany(() => Soiling, (soiling) => soiling.plant)
-  plantSoilings: Soiling[];
-
   @ManyToMany(() => Soiling, (soiling) => soiling.entities)
   @JoinTable({
     name: 'soiling_entities',
@@ -83,6 +74,15 @@ export class EntityModel {
 
   @OneToMany(() => CollectionEntity, (collection) => collection.entity)
   collections: CollectionEntity[];
+
+  @OneToMany(() => Chart, (chart) => chart.plant)
+  charts: Chart[];
+
+  @OneToMany(() => Soiling, (soiling) => soiling.baseEntity)
+  baseSoilings: Soiling[];
+
+  @OneToMany(() => Soiling, (soiling) => soiling.plant)
+  plantSoilings: Soiling[];
 
   @OneToMany(() => DocumentEntity, (document) => document.plant)
   documents: DocumentEntity[];

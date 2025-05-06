@@ -1,13 +1,6 @@
 export * from './postgres.module';
 export * from './decorators/schema-entity.decorator';
 
-export * from './interfaces/schemas.enum';
-export * from './interfaces/entities/entity-field-type.interface';
-export * from './interfaces/entities/entity-fields-condition-operators.enum';
-export * from './interfaces/entities/entity-field-condition-functions-enum';
-export * from './interfaces/entities/browser-group.interface';
-export * from './interfaces/entities/abstract-level.interface';
-
 export * from './entities/alarm-condition';
 export * from './entities/alarm-config.entity';
 export * from './entities/alert-config-message.entity';

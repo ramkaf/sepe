@@ -7,8 +7,7 @@ import {
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { SchemaEntity } from '../decorators/schema-entity.decorator';
-import { UserRole } from '../interfaces/users/user-role.interface';
-import { OtpPath } from '../interfaces/users/otp-path.interface';
+import { UserRole, OtpPath } from 'common/src/lib/enums';
 import { EntityModel } from './entity.entity';
 import { Permission } from './permissions.entity';
 import { UserComponentsConfig } from './components.entity';

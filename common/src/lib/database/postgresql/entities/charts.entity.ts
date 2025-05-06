@@ -10,6 +10,7 @@ import { SchemaEntity } from '../decorators/schema-entity.decorator';
 import { EntityModel } from './entity.entity';
 import { UserChart } from './user-chart.entity';
 import { ChartDetail } from './chart-detail.entity';
+import { TimeGroupTypeEnum } from 'common/src/lib/enums';
 
 @SchemaEntity('main', 'charts')
 export class Chart {
@@ -29,10 +30,15 @@ export class Chart {
   @Column({ name: 'chart_des', type: 'varchar', nullable: true })
   chartDes: string | null;
 
-  @Column({ name: 'time_group', type: 'integer', nullable: true })
-  timeGroup: number | null;
+  @Column({ name: 'time_group', type: 'integer' })
+  timeGroup: number;
 
-  @Column({ name: 'time_group_type', type: 'varchar', nullable: true })
+  @Column({
+    name: 'time_group_type',
+    type: 'enum',
+    enum: TimeGroupTypeEnum,
+    default: TimeGroupTypeEnum.MINUTES,
+  })
   timeGroupType: string | null;
 
   @OneToMany(() => UserChart, (userChart) => userChart.chart)

@@ -1,15 +1,15 @@
-import { IsString, IsNumber, IsInt } from 'class-validator';
+import { IsInt, IsNumber, IsString } from 'class-validator';
 
 export class CreateEntityDto {
   @IsString()
-  entity_name: string;
+  entityName: string;
 
   @IsString()
-  entity_tag: string;
+  entityTag: string;
 
   @IsNumber()
   @IsInt()
-  parent_in_tree_id: number;
+  parentInTreeId: number;
 
   @IsNumber()
   etId: number;

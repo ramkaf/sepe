@@ -1,13 +1,15 @@
 import {
   IsArray,
   IsBoolean,
+  isEnum,
   IsEnum,
   IsNumber,
   IsOptional,
   IsString,
   Matches,
 } from 'class-validator';
-import { BrowserGroupEnum, EntityFieldTypeEnum } from '../../database';
+import { BrowserGroupEnum, EntityFieldTypeEnum } from 'common/src/lib/enums';
+import { UnitEnum } from '../../enums/entities/unit.interface';
 
 export class CreateEntityFieldDto {
   @IsString()
@@ -21,8 +23,8 @@ export class CreateEntityFieldDto {
   etId: number;
 
   @IsOptional()
-  @IsString()
-  unit: string;
+  @IsEnum(UnitEnum)
+  unit: UnitEnum;
 
   @IsBoolean()
   isComputational: boolean;

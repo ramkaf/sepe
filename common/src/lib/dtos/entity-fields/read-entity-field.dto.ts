@@ -7,7 +7,7 @@ import {
   IsString,
 } from 'class-validator';
 import { Transform, Type } from 'class-transformer';
-import { BrowserGroupEnum } from '../../database';
+import { BrowserGroupEnum } from 'common/src/lib/enums';
 
 export class ReadEntityFieldDto {
   @IsOptional()

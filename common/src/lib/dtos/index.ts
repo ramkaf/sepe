@@ -21,9 +21,10 @@ export * from './chart-entity/get-multiple-chart-entity.dto';
 
 export * from './entity/create-entity.dto';
 export * from './entity/create-multiple-entity.dto';
-export * from './entity-type/get-multiple-entity-type.dto';
+export * from './entity/get-multiple-entity.dto';
 export * from './entity/update-entity.dto';
 export * from './entity/update-multiple-entity.dto';
+export * from './entity/read-entity.dto';
 
 export * from './entity-fields/create-entity-fields.dto';
 export * from './entity-fields/create-multiple-entity';
@@ -37,3 +38,8 @@ export * from './entity-type/create-multiple-entity-type';
 export * from './entity-type/get-multiple-entity-type.dto';
 export * from './entity-type/update-entity-type.dto';
 export * from './entity-type/update-multiple-entity-type.dto';
+
+export * from './chart/create-chart.dto';
+export * from './chart/get-multiple-chart.dto';
+export * from './chart/update-chart.dto';
+export * from './chart/read-chart.dto';
