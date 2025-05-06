@@ -43,8 +43,8 @@ export class EntityFieldController {
 
   @Get('browser-groups')
   async getBrowserGroupOptions() {
-      const result = this.rabbitClient.send(BROWSER_GROUP_READ , {});
-      return firstValueFrom(result);
+    const result = this.rabbitClient.send(BROWSER_GROUP_READ, {});
+    return firstValueFrom(result);
   }
 
   @Post()

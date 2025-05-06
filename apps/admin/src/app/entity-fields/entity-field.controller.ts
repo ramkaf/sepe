@@ -22,11 +22,10 @@ import {
 @Controller()
 export class EntityFieldMicroserviceController {
   constructor(private readonly entityFieldService: EntityFieldService) {}
-   @MessagePattern(ENTITY_FIELD_READ)
-    async find(@Payload() readEntityFieldDto: ReadEntityFieldDto) {
-      return await this.entityFieldService.read(readEntityFieldDto);
-    }
-
+  @MessagePattern(ENTITY_FIELD_READ)
+  async find(@Payload() readEntityFieldDto: ReadEntityFieldDto) {
+    return await this.entityFieldService.read(readEntityFieldDto);
+  }
 
   @MessagePattern(ENTITY_FIELD_CREATED)
   async create(@Payload() createEntityFieldDto: CreateEntityFieldDto) {

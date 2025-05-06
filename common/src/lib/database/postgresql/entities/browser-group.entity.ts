@@ -23,7 +23,7 @@ export class browserGroupEntity {
     default: BrowserGroupEnum.PARAMETERS,
   })
   name: BrowserGroupEnum;
-  
+
   @Column({ name: 'ef_id', type: 'int' })
   efId: number;
 

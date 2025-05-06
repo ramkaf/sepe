@@ -1,4 +1,11 @@
-import { IsArray, IsBoolean, IsEnum, IsNumber, IsOptional, IsString } from 'class-validator';
+import {
+  IsArray,
+  IsBoolean,
+  IsEnum,
+  IsNumber,
+  IsOptional,
+  IsString,
+} from 'class-validator';
 import { Transform, Type } from 'class-transformer';
 import { BrowserGroupEnum } from '../../database';
 
@@ -37,7 +44,6 @@ export class ReadEntityFieldDto {
   @IsString()
   fieldTagLike?: string;
 
-  
   @IsOptional()
   @IsArray()
   @IsEnum(BrowserGroupEnum, { each: true })

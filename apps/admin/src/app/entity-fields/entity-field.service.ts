@@ -1,4 +1,9 @@
-import { BadRequestException, ConflictException, Inject, Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  ConflictException,
+  Inject,
+  Injectable,
+} from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
 import { InjectRepository } from '@nestjs/typeorm';
 import {
@@ -23,27 +28,32 @@ export class EntityFieldService {
     private readonly entityFieldRepository: Repository<EntityField>,
     @InjectRepository(browserGroupEntity)
     private readonly browserGroupRepository: Repository<browserGroupEntity>
-  ) {}  
+  ) {}
   async read(readEntityFieldDto: ReadEntityFieldDto): Promise<EntityField[]> {
     const query = this.buildSearchQuery(readEntityFieldDto);
-    if (readEntityFieldDto.browserGroups && readEntityFieldDto.browserGroups.length > 0) {
+    if (
+      readEntityFieldDto.browserGroups &&
+      readEntityFieldDto.browserGroups.length > 0
+    ) {
       query.leftJoinAndSelect('entityField.browserGroup', 'browserGroup');
     }
-    
+
     return await query.getMany();
   }
   async add(createEntityFieldDto: CreateEntityFieldDto): Promise<EntityField> {
     const { browserGroup, ...rest } = createEntityFieldDto;
-    const {fieldTag , etId} = createEntityFieldDto
+    const { fieldTag, etId } = createEntityFieldDto;
     const ensureEntityTagNotExist = await this.entityFieldRepository.find({
-      where : {
+      where: {
         fieldTag,
-        etId
-      }
-    })
-    
+        etId,
+      },
+    });
+
     if (ensureEntityTagNotExist)
-      throw new ConflictException(`fieldTag:${fieldTag} are exist for entity type id :${etId}`)
+      throw new ConflictException(
+        `fieldTag:${fieldTag} are exist for entity type id :${etId}`
+      );
 
     const entityFieldSchema = this.entityFieldRepository.create(rest);
     const entityField = await this.entityFieldRepository.save(
@@ -79,7 +89,7 @@ export class EntityFieldService {
     updateEntityFieldDto: UpdateEntityFieldDto
   ): Promise<EntityField> {
     const { efId, browserGroup, ...rest } = updateEntityFieldDto;
-    const ef = await this.entityFieldRepository.update({ efId }, rest);
+    await this.entityFieldRepository.update({ efId }, rest);
     const entityField = await this.entityFieldRepository.findOne({
       where: { efId },
       relations: ['browserGroup'],
@@ -135,7 +145,7 @@ export class EntityFieldService {
 
   async remove(entityFieldIdDto: EntityFieldIdDto): Promise<EntityField> {
     const { efId } = entityFieldIdDto;
-    await this.browserGroupRepository.delete({efId});
+    await this.browserGroupRepository.delete({ efId });
     const entityField = await this.entityFieldRepository.findOne({
       where: { efId },
     });
@@ -154,89 +164,79 @@ export class EntityFieldService {
       )
     );
   }
-  private buildSearchQuery(filters: ReadEntityFieldDto): SelectQueryBuilder<EntityField> {
+  private buildSearchQuery(
+    filters: ReadEntityFieldDto
+  ): SelectQueryBuilder<EntityField> {
     const query = this.entityFieldRepository.createQueryBuilder('entityField');
-    
-    // Apply basic filters
     if (filters.efId !== undefined) {
       query.andWhere('entityField.efId = :efId', { efId: filters.efId });
     }
-    
+
     if (filters.etId !== undefined) {
       query.andWhere('entityField.etId = :etId', { etId: filters.etId });
     }
-    
-    // Exact match for fieldTag
+
     if (filters.fieldTag !== undefined) {
-      query.andWhere('entityField.fieldTag = :fieldTag', { fieldTag: filters.fieldTag });
+      query.andWhere('entityField.fieldTag = :fieldTag', {
+        fieldTag: filters.fieldTag,
+      });
     }
 
     if (filters.fieldTagLike !== undefined) {
-      query.andWhere('entityField.fieldTag LIKE :fieldTagLike', { 
-        fieldTagLike: `%${filters.fieldTagLike}%` 
+      query.andWhere('entityField.fieldTag LIKE :fieldTagLike', {
+        fieldTagLike: `%${filters.fieldTagLike}%`,
       });
     }
-    
-    // LIKE search for fieldTag (separate from exact match)
     if (filters.fieldTagLike !== undefined) {
-      query.andWhere('entityField.fieldTag LIKE :fieldTagLike', { 
-        fieldTagLike: `%${filters.fieldTagLike}%` 
+      query.andWhere('entityField.fieldTag LIKE :fieldTagLike', {
+        fieldTagLike: `%${filters.fieldTagLike}%`,
       });
     }
-    
+
     if (filters.isStatic !== undefined) {
-      query.andWhere('entityField.isStatic = :isStatic', { isStatic: filters.isStatic });
-    }
-    
-    if (filters.isComputational !== undefined) {
-      query.andWhere('entityField.isComputational = :isComputational', { 
-        isComputational: filters.isComputational 
+      query.andWhere('entityField.isStatic = :isStatic', {
+        isStatic: filters.isStatic,
       });
     }
-    
-    // Handle browser group filtering - FIXED JOIN SYNTAX
+
+    if (filters.isComputational !== undefined) {
+      query.andWhere('entityField.isComputational = :isComputational', {
+        isComputational: filters.isComputational,
+      });
+    }
     if (filters.browserGroups && filters.browserGroups.length > 0) {
       this.applyBrowserGroupFilters(query, filters.browserGroups);
     }
-    
+
     return query;
   }
 
-  /**
-   * Apply browser group filters to find fields that have ALL the specified browser groups
-   */
   private applyBrowserGroupFilters(
     query: SelectQueryBuilder<EntityField>,
     browserGroups: BrowserGroupEnum[]
   ): void {
-    // For each browser group, we need to ensure the entity field has it
     browserGroups.forEach((group, index) => {
       const alias = `bg${index}`;
-      
-      // Use EXISTS subquery approach - this is less likely to cause the joinColumns issue
-      query.andWhere(qb => {
-        const subQuery = qb
-          .subQuery()
-          .select('1')
-          .from(browserGroupEntity, alias)
-          .where(`${alias}.efId = entityField.efId`)
-          .andWhere(`${alias}.name = :browserGroup${index}`);
-          
-        return `EXISTS ${subQuery.getQuery()}`;
-      })
-      .setParameter(`browserGroup${index}`, group);
+      query
+        .andWhere((qb) => {
+          const subQuery = qb
+            .subQuery()
+            .select('1')
+            .from(browserGroupEntity, alias)
+            .where(`${alias}.efId = entityField.efId`)
+            .andWhere(`${alias}.name = :browserGroup${index}`);
+
+          return `EXISTS ${subQuery.getQuery()}`;
+        })
+        .setParameter(`browserGroup${index}`, group);
     });
   }
-
-  /**
-   * Get available browser group options
-   */
   async getBrowserGroupOptions(): Promise<BrowserGroupEnum[]> {
     const browserGroups = await this.browserGroupRepository
       .createQueryBuilder('bg')
       .select('DISTINCT bg.name', 'name')
       .getRawMany();
-    
-    return browserGroups.map(group => group.name);
+
+    return browserGroups.map((group) => group.name);
   }
 }
