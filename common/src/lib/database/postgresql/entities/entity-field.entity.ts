@@ -72,6 +72,12 @@ export class EntityField {
   @JoinColumn({ name: 'etId' })
   entity_type: EntityType;
 
+  @OneToOne(
+    () => EntityFieldsPeriod,
+    (fieldsPeriod) => fieldsPeriod.entityField
+  )
+  fieldsPeriod: EntityFieldsPeriod;
+
   @OneToMany(() => AlertConfigMessage, (msg) => msg.entityField)
   alertConfigMessages: AlertConfigMessage[];
 
@@ -83,12 +89,6 @@ export class EntityField {
 
   @OneToMany(() => EntityFieldCondition, (cond) => cond.dependentField)
   dependentConditions: EntityFieldCondition[];
-
-  @OneToOne(
-    () => EntityFieldsPeriod,
-    (fieldsPeriod) => fieldsPeriod.entityField
-  )
-  fieldsPeriod: EntityFieldsPeriod;
 
   @OneToMany(() => Soiling, (soiling) => soiling.baseStringVoltage)
   soilingBaseVoltages: Soiling[];
@@ -105,6 +105,6 @@ export class EntityField {
   @ManyToMany(() => CollectionEntity, (collection) => collection.entityFields)
   collections: CollectionEntity[];
 
-  @OneToMany(() => browserGroupEntity, (bwe) => bwe.efId)
+  @OneToMany(() => browserGroupEntity, (bwe) => bwe.entityField)
   browserGroup: browserGroupEntity[];
 }

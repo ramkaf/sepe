@@ -2,16 +2,19 @@ import { Controller, Get } from '@nestjs/common';
 import { MessagePattern, Payload } from '@nestjs/microservices';
 import { EntityFieldService } from './entity-field.service';
 import {
+  BROWSER_GROUP_READ,
   CreateEntityFieldArrayDto,
   CreateEntityFieldDto,
   ENTITY_FIELD_CREATED,
   ENTITY_FIELD_MULTIPLE_CREATED,
   ENTITY_FIELD_MULTIPLE_REMOVED,
   ENTITY_FIELD_MULTIPLE_UPDATED,
+  ENTITY_FIELD_READ,
   ENTITY_FIELD_REMOVED,
   ENTITY_FIELD_UPDATED,
   EntityFieldIdDto,
   GetEntityFieldByIdArrayDto,
+  ReadEntityFieldDto,
   UpdateEntityFieldDto,
   UpdateMultipleEntityFieldDto,
 } from '@sephrmicroservice-monorepo/common';
@@ -19,10 +22,11 @@ import {
 @Controller()
 export class EntityFieldMicroserviceController {
   constructor(private readonly entityFieldService: EntityFieldService) {}
-  //  @MessagePattern(ENTITY_FIELD_READ)
-  //   async find(@Payload() readEntityFieldDto: ReadEntityFieldDto) {
-  //     return await this.entityFieldService.read(readEntityFieldDto);
-  //   }
+   @MessagePattern(ENTITY_FIELD_READ)
+    async find(@Payload() readEntityFieldDto: ReadEntityFieldDto) {
+      return await this.entityFieldService.read(readEntityFieldDto);
+    }
+
 
   @MessagePattern(ENTITY_FIELD_CREATED)
   async create(@Payload() createEntityFieldDto: CreateEntityFieldDto) {
@@ -48,13 +52,6 @@ export class EntityFieldMicroserviceController {
     return await this.entityFieldService.modifyMany(updateEntityFieldDto);
   }
 
-  // @MessagePattern(ENTITY_FIELD_MULTIPLE_UPDATED)
-  // async updateMany(
-  //   @Payload() updateMultipleEntityFieldDto: UpdateMultipleEntityFieldArrayDto
-  // ) {
-  //   return await this.entityFieldService.modifyMany(updateMultipleEntityFieldDto);
-  // }
-
   @MessagePattern(ENTITY_FIELD_REMOVED)
   async delete(@Payload() entityFieldIdDto: EntityFieldIdDto) {
     return await this.entityFieldService.remove(entityFieldIdDto);
@@ -65,5 +62,10 @@ export class EntityFieldMicroserviceController {
     @Payload() getEntityFieldArrayByIdDto: GetEntityFieldByIdArrayDto
   ) {
     return await this.entityFieldService.removeMany(getEntityFieldArrayByIdDto);
+  }
+
+  @MessagePattern(BROWSER_GROUP_READ)
+  async getBrowserGroups() {
+    return await this.entityFieldService.getBrowserGroupOptions();
   }
 }

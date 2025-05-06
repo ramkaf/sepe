@@ -23,8 +23,11 @@ export class browserGroupEntity {
     default: BrowserGroupEnum.PARAMETERS,
   })
   name: BrowserGroupEnum;
+  
+  @Column({ name: 'ef_id', type: 'int' })
+  efId: number;
 
-  @ManyToOne(() => EntityField, { nullable: false })
-  @JoinColumn({ name: 'efId' })
-  efId: EntityField;
+  @ManyToOne(() => EntityField, (entityField) => entityField.browserGroup)
+  @JoinColumn({ name: 'ef_id' })
+  entityField: EntityField;
 }
