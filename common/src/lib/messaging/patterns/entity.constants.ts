@@ -7,3 +7,5 @@ export const ENTITY_MULTIPLE_READ = 'entity.multiple.read';
 export const ENTITY_MULTIPLE_CREATED = 'entity.multiple.created';
 export const ENTITY_MULTIPLE_UPDATED = 'entity.multiple.updated';
 export const ENTITY_MULTIPLE_REMOVED = 'entity.multiple.removed';
+
+export const INITIATE_PLANT = 'initiate.plant';

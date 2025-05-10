@@ -33,8 +33,7 @@ export class ChartService {
     return charts;
   }
   async modify(updateChartDto: UpdateChartDto): Promise<Chart> {
-    const { chartId } =
-      updateChartDto;
+    const { chartId } = updateChartDto;
     const chart = await this.chartRepository.findOne({ where: { chartId } });
     if (!chart) {
       throw new Error(`Chart with chart id ${chartId} not found`);

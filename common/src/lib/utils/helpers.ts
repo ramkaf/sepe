@@ -21,3 +21,7 @@ export function getErrorMessage(err: unknown): string {
   }
   return JSON.stringify(err);
 }
+
+export function toTitleCase(word: string) {
+  return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
+}

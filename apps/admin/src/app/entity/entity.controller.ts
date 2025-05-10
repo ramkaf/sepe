@@ -16,6 +16,9 @@ import {
   CreateMultipleEntityDto,
   UpdateMultipleEntityDto,
   GetMultipleEntityByIdDto,
+  INITIATE_PLANT,
+  PlantIdDto,
+  PlantTagDto,
 } from '@sephrmicroservice-monorepo/common';
 
 @Controller('admin/entity')

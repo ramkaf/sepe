@@ -43,7 +43,7 @@ export class EntityFieldService {
         etId,
       },
     });
-    
+
     if (ensureEntityTagNotExist)
       throw new ConflictException(
         `fieldTag:${fieldTag} are exist for entity type id :${etId}`

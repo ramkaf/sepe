@@ -7,7 +7,9 @@ export * from './generals/detail-id.dto';
 export * from './generals/entity-id.dto';
 export * from './generals/entity-type-id.dto';
 export * from './generals/plant-id.dto';
-export * from './generals/detail-field-id.dto'
+export * from './generals/detail-field-id.dto';
+export * from './generals/plant-tag.dto';
+export * from './generals/entity-type-id.dto';
 
 export * from './entity-type/read-entity-type.dto';
 export * from './entity-type/create-entity-type.dto';
@@ -45,9 +47,10 @@ export * from './chart/get-multiple-chart.dto';
 export * from './chart/update-chart.dto';
 export * from './chart/read-chart.dto';
 
+export * from './chart-detail/create-chart-detail.dto';
+export * from './chart-detail/update-chart-detail.dto';
 
-export * from './chart-detail/create-chart-detail.dto'
-export * from './chart-detail/update-chart-detail.dto'
+export * from './detail-field/create-detail-field.dto';
+export * from './detail-field/update-chart-detail.dto';
 
-export * from './detail-field/create-detail-field.dto'
-export * from './detail-field/update-chart-detail.dto'
+export * from './init-plant/create-plant-tag.dto';

@@ -5,6 +5,7 @@ import {
   ADMIN_RABBITMQ_QUEUE,
   ADMIN_RABBITMQ_SERVICE,
   EntityModel,
+  EntityType,
   RabbitMQModule,
 } from '@sephrmicroservice-monorepo/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
@@ -15,7 +16,7 @@ import { Entity } from 'typeorm';
     RabbitMQModule.register([
       { name: ADMIN_RABBITMQ_SERVICE, queue: ADMIN_RABBITMQ_QUEUE },
     ]),
-    TypeOrmModule.forFeature([EntityModel]),
+    TypeOrmModule.forFeature([EntityModel, EntityType]),
   ],
   controllers: [EntityMicroserviceController],
   providers: [EntityService],

@@ -22,16 +22,26 @@ export class DetailField {
   @Column({ name: 'field_id', type: 'int' })
   fieldId: number;
 
-  @Column({ name: 'unit', type: 'enum',enum:UnitEnum })
+  @Column({ name: 'unit', type: 'enum', enum: UnitEnum })
   unit: string;
 
-  @Column({ name: 'devide_by', type: 'int', default:1 })
+  @Column({ name: 'devide_by', type: 'int', default: 1 })
   devideBy: number;
 
-  @Column({ name: 'opr_type', type: 'enum',enum:OperationTypeEnum , default :OperationTypeEnum.AVG })
+  @Column({
+    name: 'opr_type',
+    type: 'enum',
+    enum: OperationTypeEnum,
+    default: OperationTypeEnum.AVG,
+  })
   oprType: OperationTypeEnum;
 
-  @Column({ name: 'chart_type', type: 'enum',enum:ChartTypeEnum,default:ChartTypeEnum.LINE})
+  @Column({
+    name: 'chart_type',
+    type: 'enum',
+    enum: ChartTypeEnum,
+    default: ChartTypeEnum.LINE,
+  })
   chartType: ChartTypeEnum;
 
   @ManyToOne(() => ChartDetail, (chartDetail) => chartDetail.detailsFields, {
