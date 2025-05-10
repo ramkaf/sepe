@@ -22,7 +22,7 @@ import { Soiling } from './entities/soiling.entity';
 import { ChartDetail } from './entities/chart-detail.entity';
 import { ChartEntity } from './entities/chart-entity.entity';
 import { Source } from './entities/sources.entity';
-import { DetailsField } from './entities/detail-field.entity';
+import { DetailField } from './entities/detail-field.entity';
 import { FleetManager } from './entities/fleat-manager.entity';
 import { CollectionEntity } from './entities/collection.entity';
 import { DocumentEntity } from './entities/document.entity';
@@ -54,7 +54,7 @@ import { browserGroupEntity } from './entities/browser-group.entity';
           EntityField,
           Chart,
           ChartDetail,
-          DetailsField,
+          DetailField,
           ChartEntity,
           UserChart,
           AlarmCondition,

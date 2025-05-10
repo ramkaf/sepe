@@ -45,10 +45,6 @@ export class EntityService {
       queryBuilder.andWhere('entity.parentInTreeId = :parentInTreeId', {
         parentInTreeId,
       });
-
-    console.log('Generated SQL:', queryBuilder.getSql());
-    console.log('Query parameters:', queryBuilder.getParameters());
-
     const entities = await queryBuilder.getMany();
     return entities;
   }

@@ -8,6 +8,8 @@ import {
 } from '@sephrmicroservice-monorepo/common';
 import { EntityController } from './controllers/admin/entities/entity.controller';
 import { ChartController } from './controllers/admin/charts/chart.controller';
+import { ChartDetailsController } from './controllers/admin/charts/chart-detail.controller';
+import { DetailFieldController } from './controllers/admin/charts/detail-field.controller';
 
 @Module({
   imports: [
@@ -20,6 +22,8 @@ import { ChartController } from './controllers/admin/charts/chart.controller';
     EntityFieldController,
     EntityController,
     ChartController,
+    ChartDetailsController,
+    DetailFieldController
   ],
 })
 export class AppModule {}

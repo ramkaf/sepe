@@ -16,7 +16,7 @@ import { BookmarkField } from './bookmark-field.entity';
 import { EntityFieldCondition } from './field-condition.entity';
 import { EntityFieldsPeriod } from './field-period.entity';
 import { Soiling } from './soiling.entity';
-import { DetailsField } from './detail-field.entity';
+import { DetailField } from './detail-field.entity';
 import { CollectionEntity } from './collection.entity';
 import { browserGroupEntity } from './browser-group.entity';
 import { EntityFieldTypeEnum } from 'common/src/lib/enums';
@@ -106,8 +106,8 @@ export class EntityField {
   @ManyToMany(() => Soiling, (soiling) => soiling.entityFields)
   soilingFields: Soiling[];
 
-  @OneToMany(() => DetailsField, (detailsField) => detailsField.chartDetail)
-  detailsFields: DetailsField[];
+  @OneToMany(() => DetailField, (detailsField) => detailsField.chartDetail)
+  detailsFields: DetailField[];
 
   @ManyToMany(() => CollectionEntity, (collection) => collection.entityFields)
   collections: CollectionEntity[];

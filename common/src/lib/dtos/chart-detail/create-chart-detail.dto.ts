@@ -1,23 +1,24 @@
 import { Type } from 'class-transformer';
-import { IsNumber, IsOptional, IsString } from 'class-validator';
+import { IsEnum, IsNumber, IsOptional, IsString } from 'class-validator';
+import { GroupTypeEnum } from '../../enums';
 
 export class CreateChartDetailDto {
   @IsString()
-  detail_title: string;
+  detailTitle: string;
 
   @IsString()
-  detail_des: string;
+  detailDes: string;
 
-  @IsString()
-  group_type: string;
+  @IsEnum(GroupTypeEnum)
+  groupType: GroupTypeEnum;
 
   @IsOptional()
   @Type(() => Number)
   @IsNumber()
-  chart_id?: number;
+  chartId: number;
 
   @IsOptional()
   @Type(() => Number)
   @IsNumber()
-  etId?: number;
+  etId: number;
 }

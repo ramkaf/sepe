@@ -8,9 +8,11 @@ import {
 import { SchemaEntity } from '../decorators/schema-entity.decorator';
 import { ChartDetail } from './chart-detail.entity';
 import { EntityField } from './entity-field.entity'; // فرض کردم چنین موجودی داری
+import { ChartTypeEnum, OperationTypeEnum } from 'common/src/lib/enums';
+import { UnitEnum } from 'common/src/lib/enums/entities/unit.interface';
 
 @SchemaEntity('main', 'details_fields')
-export class DetailsField {
+export class DetailField {
   @PrimaryGeneratedColumn({ name: 'df_id' })
   dfId: number;
 
@@ -20,17 +22,17 @@ export class DetailsField {
   @Column({ name: 'field_id', type: 'int' })
   fieldId: number;
 
-  @Column({ name: 'unit', type: 'varchar', nullable: true })
-  unit: string | null;
+  @Column({ name: 'unit', type: 'enum',enum:UnitEnum })
+  unit: string;
 
-  @Column({ name: 'devide_by', type: 'int', nullable: true })
-  devideBy: number | null;
+  @Column({ name: 'devide_by', type: 'int', default:1 })
+  devideBy: number;
 
-  @Column({ name: 'opr_type', type: 'varchar', nullable: true })
-  oprType: string | null;
+  @Column({ name: 'opr_type', type: 'enum',enum:OperationTypeEnum , default :OperationTypeEnum.AVG })
+  oprType: OperationTypeEnum;
 
-  @Column({ name: 'chart_type', type: 'varchar', nullable: true })
-  chartType: string | null;
+  @Column({ name: 'chart_type', type: 'enum',enum:ChartTypeEnum,default:ChartTypeEnum.LINE})
+  chartType: ChartTypeEnum;
 
   @ManyToOne(() => ChartDetail, (chartDetail) => chartDetail.detailsFields, {
     onDelete: 'CASCADE',

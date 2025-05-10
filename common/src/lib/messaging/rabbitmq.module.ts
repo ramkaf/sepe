@@ -20,7 +20,7 @@ export class RabbitMQModule {
       name: q.name,
       transport: Transport.RMQ,
       options: {
-        urls: [RABBITMQ_URL ?? 'amqp://localhost:5672'],
+        urls: [RABBITMQ_URL],
         queue: q.queue,
         queueOptions: {
           durable: false,

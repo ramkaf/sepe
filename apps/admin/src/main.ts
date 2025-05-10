@@ -32,7 +32,6 @@ async function bootstrap() {
       transform: true,
     })
   );
-
   app.listen().then(() => {
     logger.log('admin Microservice is listening');
   });

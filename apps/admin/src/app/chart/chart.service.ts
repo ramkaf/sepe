@@ -33,11 +33,11 @@ export class ChartService {
     return charts;
   }
   async modify(updateChartDto: UpdateChartDto): Promise<Chart> {
-    const { chartId, chartTitle, chartDes, timeGroup, timeGroupType, plantId } =
+    const { chartId } =
       updateChartDto;
     const chart = await this.chartRepository.findOne({ where: { chartId } });
     if (!chart) {
-      throw new Error(`Entity with eId ${chartId} not found`);
+      throw new Error(`Chart with chart id ${chartId} not found`);
     }
     Object.assign(chart, updateChartDto);
     return await this.chartRepository.save(chart);
@@ -46,7 +46,7 @@ export class ChartService {
     const { chartId } = chartIdDto;
     const chart = await this.chartRepository.findOne({ where: { chartId } });
     if (!chart) {
-      throw new Error(`Entity with eId ${chartId} not found`);
+      throw new Error(`Chart with chart id ${chartId} not found`);
     }
     return await this.chartRepository.remove(chart);
   }

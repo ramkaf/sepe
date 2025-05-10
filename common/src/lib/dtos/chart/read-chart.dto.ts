@@ -1,8 +1,3 @@
-import { Type } from 'class-transformer';
-import { IsInt } from 'class-validator';
+import { PlantIdDto } from '../generals/plant-id.dto';
 
-export class ReadChartDto {
-  @IsInt()
-  @Type(() => Number)
-  plantId: number;
-}
+export class ReadChartDto extends PlantIdDto {}

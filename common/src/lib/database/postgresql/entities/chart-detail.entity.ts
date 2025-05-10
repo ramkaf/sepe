@@ -9,8 +9,9 @@ import {
 import { SchemaEntity } from '../decorators/schema-entity.decorator';
 import { Chart } from './charts.entity';
 import { EntityType } from './entity-types.entity';
-import { DetailsField } from './detail-field.entity';
+import { DetailField } from './detail-field.entity';
 import { ChartEntity } from './chart-entity.entity';
+import { GroupTypeEnum } from 'common/src/lib/enums';
 
 @SchemaEntity('main', 'chart_details')
 export class ChartDetail {
@@ -23,8 +24,8 @@ export class ChartDetail {
   @Column({ name: 'detail_des', type: 'varchar', nullable: true })
   detailDes: string | null;
 
-  @Column({ name: 'group_type', type: 'varchar', nullable: true })
-  groupType: string | null;
+  @Column({ name: 'group_type', type: 'enum',enum:GroupTypeEnum, default:GroupTypeEnum.PER_DEVICE })
+  groupType: GroupTypeEnum;
 
   @Column({ name: 'chart_id', type: 'int' })
   chartId: number;
@@ -44,8 +45,8 @@ export class ChartDetail {
   @JoinColumn({ name: 'etId' })
   entityType: EntityType | null;
 
-  @OneToMany(() => DetailsField, (detailsField) => detailsField.chartDetail)
-  detailsFields: DetailsField[];
+  @OneToMany(() => DetailField, (detailsField) => detailsField.chartDetail)
+  detailsFields: DetailField[];
 
   @OneToMany(() => ChartEntity, (chartEntity) => chartEntity.chartDetail)
   chartEntities: ChartEntity[];

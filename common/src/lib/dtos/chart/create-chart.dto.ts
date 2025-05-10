@@ -7,11 +7,9 @@ export class CreateChartDto {
   @Type(() => Number)
   plantId: number;
 
-  @IsOptional()
   @IsString()
-  chartTitle?: string;
+  chartTitle: string;
 
-  @IsOptional()
   @IsString()
   chartDes: string;
 
@@ -19,7 +17,6 @@ export class CreateChartDto {
   @Type(() => Number)
   timeGroup: number;
 
-  @IsOptional()
   @IsEnum(TimeGroupTypeEnum)
   timeGroupType: TimeGroupTypeEnum;
 }

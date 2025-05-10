@@ -33,6 +33,7 @@ export class EntityFieldService {
 
     return await query.getMany();
   }
+
   async add(createEntityFieldDto: CreateEntityFieldDto): Promise<EntityField> {
     const { browserGroup, ...rest } = createEntityFieldDto;
     const { fieldTag, etId } = createEntityFieldDto;
@@ -42,7 +43,7 @@ export class EntityFieldService {
         etId,
       },
     });
-
+    
     if (ensureEntityTagNotExist)
       throw new ConflictException(
         `fieldTag:${fieldTag} are exist for entity type id :${etId}`

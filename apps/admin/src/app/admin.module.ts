@@ -14,6 +14,7 @@ import {
 import { ChartModule } from './chart/chart.module';
 import { DetailFieldModule } from './detail-field/detail-field.module';
 import { EntityModule } from './entity/entity.module';
+import { ChartDetailModule } from './chart-detail/chart-detail.module';
 
 @Module({
   imports: [
@@ -25,10 +26,12 @@ import { EntityModule } from './entity/entity.module';
     EntityTypeModule,
     EntityFieldModule,
     EntityModule,
-    ChartModule
+    ChartModule,
+    ChartDetailModule,
+    DetailFieldModule,
+
     // ChartDetail,
     // DetailFieldModule,
-  ],
-  providers: [],
+  ]
 })
 export class AdminModule {}
