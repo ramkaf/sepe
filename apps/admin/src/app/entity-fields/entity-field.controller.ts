@@ -3,7 +3,7 @@ import { MessagePattern, Payload } from '@nestjs/microservices';
 import { EntityFieldService } from './entity-field.service';
 import {
   BROWSER_GROUP_READ,
-  CreateEntityFieldArrayDto,
+  CreateMultipleEntityFieldDto,
   CreateEntityFieldDto,
   ENTITY_FIELD_CREATED,
   ENTITY_FIELD_MULTIPLE_CREATED,
@@ -34,7 +34,7 @@ export class EntityFieldMicroserviceController {
 
   @MessagePattern(ENTITY_FIELD_MULTIPLE_CREATED)
   async createMany(
-    @Payload() createEntityFieldArrayDto: CreateEntityFieldArrayDto
+    @Payload() createEntityFieldArrayDto: CreateMultipleEntityFieldDto
   ) {
     return await this.entityFieldService.addMany(createEntityFieldArrayDto);
   }

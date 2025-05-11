@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { ConflictException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import {
   CreateEntityDto,
@@ -7,9 +7,12 @@ import {
   EntityModel,
   GetMultipleEntityByIdDto,
   PlantIdDto,
+  PlantTagDto,
   ReadEntityDto,
   UpdateEntityDto,
   UpdateMultipleEntityDto,
+  IPlantEntityCreate,
+  EntityType,
 } from '@sephrmicroservice-monorepo/common';
 import { Repository } from 'typeorm';
 
@@ -17,7 +20,9 @@ import { Repository } from 'typeorm';
 export class EntityService {
   constructor(
     @InjectRepository(EntityModel)
-    private readonly entityRepository: Repository<EntityModel>
+    private readonly entityRepository: Repository<EntityModel>,
+    @InjectRepository(EntityType)
+    private readonly entityTypeRepository: Repository<EntityType>
   ) {}
 
   async read(readEntityDto: ReadEntityDto) {
@@ -114,9 +119,4 @@ export class EntityService {
       })
     );
   }
-
-  //todo
-  // async readEntitiesOfAPlant(plantIdDto:PlantIdDto){
-
-  // }
 }

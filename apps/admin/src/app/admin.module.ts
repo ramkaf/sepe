@@ -7,6 +7,7 @@ import {
   ADMIN_RABBITMQ_SERVICE,
   ChartDetail,
   ChartEntity,
+  ElasticModule,
   EntityModel,
   PostgresModule,
   RabbitMQModule,
@@ -15,6 +16,7 @@ import { ChartModule } from './chart/chart.module';
 import { DetailFieldModule } from './detail-field/detail-field.module';
 import { EntityModule } from './entity/entity.module';
 import { ChartDetailModule } from './chart-detail/chart-detail.module';
+import { InitPlantModule } from './init-plant/init-plant.module';
 
 @Module({
   imports: [
@@ -29,9 +31,10 @@ import { ChartDetailModule } from './chart-detail/chart-detail.module';
     ChartModule,
     ChartDetailModule,
     DetailFieldModule,
-
+    InitPlantModule,
+    // ElasticModule
     // ChartDetail,
     // DetailFieldModule,
-  ]
+  ],
 })
 export class AdminModule {}

@@ -23,6 +23,7 @@ import {
   ENTITY_UPDATED,
   EntityIdDto,
   GetMultipleEntityByIdDto,
+  PlantTagDto,
   ReadEntityDto,
   UpdateEntityDto,
   UpdateMultipleEntityDto,

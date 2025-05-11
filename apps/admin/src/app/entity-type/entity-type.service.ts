@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import {
-  CreateEntityTypeArrayDto,
+  CreateMultipleEntityTypeDto,
   CreateEntityTypeDto,
   EntityType,
   EntityTypeIdDto,
@@ -51,7 +51,7 @@ export class EntityTypeService {
   }
 
   async addMany(
-    createEntityTypeArrayDto: CreateEntityTypeArrayDto
+    createEntityTypeArrayDto: CreateMultipleEntityTypeDto
   ): Promise<EntityType[]> {
     return await Promise.all(
       createEntityTypeArrayDto.data.map(

@@ -21,3 +21,19 @@ export function getErrorMessage(err: unknown): string {
   }
   return JSON.stringify(err);
 }
+
+export function toTitleCase(word: string) {
+  return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
+}
+export function getIndexByPlantTag(tag: string) {
+  return `${tag}-*`;
+}
+
+export function getlastPlantIndex(plantTag: string): string {
+  const now = new Date();
+  const year = now.getFullYear();
+  const month = String(now.getMonth() + 1).padStart(2, '0'); // months are 0-indexed
+  const day = String(now.getDate()).padStart(2, '0');
+
+  return `${plantTag}-${year}.${month}.${day}`;
+}

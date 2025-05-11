@@ -2,7 +2,7 @@ import { ConflictException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import {
   BrowserGroupEnum,
-  CreateEntityFieldArrayDto,
+  CreateMultipleEntityFieldDto,
   CreateEntityFieldDto,
   EntityField,
   EntityFieldIdDto,
@@ -43,7 +43,7 @@ export class EntityFieldService {
         etId,
       },
     });
-    
+
     if (ensureEntityTagNotExist)
       throw new ConflictException(
         `fieldTag:${fieldTag} are exist for entity type id :${etId}`
@@ -68,7 +68,7 @@ export class EntityFieldService {
   }
 
   async addMany(
-    createEntityFieldArrayDto: CreateEntityFieldArrayDto
+    createEntityFieldArrayDto: CreateMultipleEntityFieldDto
   ): Promise<EntityField[]> {
     return await Promise.all(
       createEntityFieldArrayDto.data.map(

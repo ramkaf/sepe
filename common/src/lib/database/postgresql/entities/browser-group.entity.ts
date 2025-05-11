@@ -27,7 +27,9 @@ export class browserGroupEntity {
   @Column({ name: 'ef_id', type: 'int' })
   efId: number;
 
-  @ManyToOne(() => EntityField, (entityField) => entityField.browserGroup)
+  @ManyToOne(() => EntityField, (entityField) => entityField.browserGroup, {
+    onDelete: 'CASCADE',
+  })
   @JoinColumn({ name: 'ef_id' })
   entityField: EntityField;
 }

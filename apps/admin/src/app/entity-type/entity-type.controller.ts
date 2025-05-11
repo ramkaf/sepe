@@ -2,7 +2,7 @@ import { Controller, Get, Inject } from '@nestjs/common';
 import { EntityTypeService } from './entity-type.service';
 import { MessagePattern, Payload } from '@nestjs/microservices';
 import {
-  CreateEntityTypeArrayDto,
+  CreateMultipleEntityTypeDto,
   CreateEntityTypeDto,
   ENTITY_TYPE_CREATED,
   ENTITY_TYPE_MULTIPLE_CREATED,
@@ -34,7 +34,7 @@ export class EntityTypeMicroserviceController {
 
   @MessagePattern(ENTITY_TYPE_MULTIPLE_CREATED)
   async createMany(
-    @Payload() createEntityTypeArrayDto: CreateEntityTypeArrayDto
+    @Payload() createEntityTypeArrayDto: CreateMultipleEntityTypeDto
   ) {
     return await this.entityTypeService.addMany(createEntityTypeArrayDto);
   }

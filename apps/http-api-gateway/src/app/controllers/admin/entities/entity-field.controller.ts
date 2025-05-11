@@ -12,7 +12,7 @@ import { ClientProxy } from '@nestjs/microservices';
 import {
   ADMIN_RABBITMQ_SERVICE,
   BROWSER_GROUP_READ,
-  CreateEntityFieldArrayDto,
+  CreateMultipleEntityFieldDto,
   CreateEntityFieldDto,
   ENTITY_FIELD_CREATED,
   ENTITY_FIELD_MULTIPLE_CREATED,
@@ -54,7 +54,7 @@ export class EntityFieldController {
   }
 
   @Post('/many')
-  async createManyEntityField(@Body() data: CreateEntityFieldArrayDto) {
+  async createManyEntityField(@Body() data: CreateMultipleEntityFieldDto) {
     const result = this.rabbitClient.send(ENTITY_FIELD_MULTIPLE_CREATED, data);
     return firstValueFrom(result);
   }

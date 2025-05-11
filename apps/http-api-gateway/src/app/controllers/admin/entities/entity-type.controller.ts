@@ -11,7 +11,7 @@ import {
 import { ClientProxy } from '@nestjs/microservices';
 import {
   ADMIN_RABBITMQ_SERVICE,
-  CreateEntityTypeArrayDto,
+  CreateMultipleEntityTypeDto,
   CreateEntityTypeDto,
   ENTITY_TYPE_CREATED,
   ENTITY_TYPE_MULTIPLE_CREATED,
@@ -47,7 +47,7 @@ export class EntityTypeController {
   }
 
   @Post('/many')
-  async createManyEntityType(@Body() data: CreateEntityTypeArrayDto) {
+  async createManyEntityType(@Body() data: CreateMultipleEntityTypeDto) {
     const result = this.rabbitClient.send(ENTITY_TYPE_MULTIPLE_CREATED, data);
     return firstValueFrom(result);
   }

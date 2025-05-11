@@ -10,6 +10,9 @@ import { EntityController } from './controllers/admin/entities/entity.controller
 import { ChartController } from './controllers/admin/charts/chart.controller';
 import { ChartDetailsController } from './controllers/admin/charts/chart-detail.controller';
 import { DetailFieldController } from './controllers/admin/charts/detail-field.controller';
+import { PlantInitController } from './controllers/admin/plantinit/init-plant.controller';
+import { SourceController } from './controllers/admin/plantinit/source.controller';
+import { RevertPlantInitController } from './controllers/admin/plantinit/revert-init-plant.controller';
 
 @Module({
   imports: [
@@ -23,7 +26,10 @@ import { DetailFieldController } from './controllers/admin/charts/detail-field.c
     EntityController,
     ChartController,
     ChartDetailsController,
-    DetailFieldController
+    DetailFieldController,
+    PlantInitController,
+    RevertPlantInitController,
+    SourceController,
   ],
 })
 export class AppModule {}

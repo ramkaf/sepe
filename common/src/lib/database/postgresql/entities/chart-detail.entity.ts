@@ -24,7 +24,12 @@ export class ChartDetail {
   @Column({ name: 'detail_des', type: 'varchar', nullable: true })
   detailDes: string | null;
 
-  @Column({ name: 'group_type', type: 'enum',enum:GroupTypeEnum, default:GroupTypeEnum.PER_DEVICE })
+  @Column({
+    name: 'group_type',
+    type: 'enum',
+    enum: GroupTypeEnum,
+    default: GroupTypeEnum.PER_DEVICE,
+  })
   groupType: GroupTypeEnum;
 
   @Column({ name: 'chart_id', type: 'int' })
