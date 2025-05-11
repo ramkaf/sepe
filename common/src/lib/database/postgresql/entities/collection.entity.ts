@@ -38,9 +38,11 @@ export class CollectionEntity {
   @Column({ name: 'plant_id', type: 'integer' })
   plantId: number;
 
-  @ManyToMany(() => EntityField, (entityField) => entityField.collections)
+  @ManyToMany(() => EntityField, (entityField) => entityField.collections, {
+    onDelete: 'CASCADE',
+  })
   @JoinTable({
-    name: 'collection_params', // <-- the join table name
+    name: 'collection_params',
     joinColumn: {
       name: 'collection_id',
       referencedColumnName: 'id',

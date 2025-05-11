@@ -8,9 +8,5 @@ export class InitPlantTagDto {
 
   @IsOptional()
   @IsString()
-  entityTypeDescription?: string;
-
-  @IsOptional()
-  @IsString()
   entityName?: string;
 }

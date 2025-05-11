@@ -7,6 +7,7 @@ import {
   ADMIN_RABBITMQ_SERVICE,
   ChartDetail,
   ChartEntity,
+  ElasticModule,
   EntityModel,
   PostgresModule,
   RabbitMQModule,
@@ -31,6 +32,7 @@ import { InitPlantModule } from './init-plant/init-plant.module';
     ChartDetailModule,
     DetailFieldModule,
     InitPlantModule,
+    // ElasticModule
     // ChartDetail,
     // DetailFieldModule,
   ],

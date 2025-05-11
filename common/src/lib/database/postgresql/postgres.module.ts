@@ -74,7 +74,14 @@ import { browserGroupEntity } from './entities/browser-group.entity';
       }),
     }),
   ],
-  exports: [TypeOrmModule],
+  providers: [
+    {
+      provide: 'DATA_SOURCE',
+      useFactory: (dataSource: DataSource) => dataSource,
+      inject: [DataSource],
+    },
+  ],
+  exports: [TypeOrmModule, 'DATA_SOURCE'],
 })
 export class PostgresModule implements OnModuleInit {
   constructor(private dataSource: DataSource) {}

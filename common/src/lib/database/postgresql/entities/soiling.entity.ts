@@ -48,7 +48,9 @@ export class Soiling {
   @ManyToMany(() => EntityModel, (entity) => entity.soilings)
   entities: EntityModel[];
 
-  @ManyToMany(() => EntityField, (field) => field.soilingFields)
+  @ManyToMany(() => EntityField, (field) => field.soilingFields, {
+    onDelete: 'CASCADE',
+  })
   @JoinTable({
     name: 'soiling_entity_fields',
     joinColumn: {
