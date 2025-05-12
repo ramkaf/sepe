@@ -9,6 +9,7 @@ import { MicroserviceOptions, Transport } from '@nestjs/microservices';
 import { AdminModule } from './app/admin.module';
 import {
   ADMIN_RABBITMQ_QUEUE,
+  CustomRpcExceptionFilter,
   RABBITMQ_URL,
 } from '@sephrmicroservice-monorepo/common';
 
@@ -25,6 +26,7 @@ async function bootstrap() {
       },
     }
   );
+  app.useGlobalFilters(new CustomRpcExceptionFilter ())
   app.useGlobalPipes(
     new ValidationPipe({
       whitelist: true,
