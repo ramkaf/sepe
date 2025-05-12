@@ -28,6 +28,7 @@ import { CollectionEntity } from './entities/collection.entity';
 import { DocumentEntity } from './entities/document.entity';
 import { ApiLog } from './entities/log.entity';
 import { browserGroupEntity } from './entities/browser-group.entity';
+import { SchemaInitializer } from './models/schema-Initializer';
 
 @Module({
   imports: [
@@ -69,9 +70,14 @@ import { browserGroupEntity } from './entities/browser-group.entity';
           DocumentEntity,
           browserGroupEntity,
         ],
-        synchronize: configService.get<boolean>('POSTGRES_SYNCHRONIZE', false),
+        synchronize: false,
         logging: configService.get<boolean>('POSTGRES_LOGGING', true),
       }),
+      extraProviders: [{
+        provide: 'SchemaInitializer',
+        useFactory: (dataSource: DataSource) => new SchemaInitializer(dataSource),
+        inject: [DataSource]
+      }]
     }),
   ],
   providers: [
@@ -84,15 +90,20 @@ import { browserGroupEntity } from './entities/browser-group.entity';
   exports: [TypeOrmModule, 'DATA_SOURCE'],
 })
 export class PostgresModule implements OnModuleInit {
-  constructor(private dataSource: DataSource) {}
+  private readonly logger: Logger;
+  constructor(
+    private dataSource: DataSource,
+  ) {
+    this.logger = new Logger(PostgresModule.name);
+  }
   private requiredSchemas = Object.values(PostgresSchemasEnum);
   async onModuleInit() {
     await this.ensureSchemasExist();
+    await this.dataSource.synchronize(); 
     await this.ensureEntityTypeSequenceStartsAt233();
     await this.ensureEntitySequenceStartsAt944();
     await this.ensureEntityFieldSequenceStartsAt4372();
   }
-
   private async ensureSchemasExist(): Promise<void> {
     const queryRunner = this.dataSource.createQueryRunner();
     try {
@@ -106,8 +117,7 @@ export class PostgresModule implements OnModuleInit {
           await queryRunner.query(`CREATE SCHEMA IF NOT EXISTS "${schema}"`);
       }
     } catch (error) {
-      const e = error as Error;
-      console.error('Error ensuring schemas exist:', error);
+      this.logger.error('Error ensuring schemas exist:', error);
       throw error;
     } finally {
       await queryRunner.release();
